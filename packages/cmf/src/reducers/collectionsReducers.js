@@ -98,9 +98,9 @@ function updateMapElements(state, action, path) {
 	const updates = action.operations.update;
 	const changedCollection = Object.keys(updates).reduce(
 		(collectionAccu, id) => collectionAccu.set(id, updates[id]),
-		state.get(path[0]),
+		state.getIn(path),
 	);
-	return state.set(path[0], changedCollection);
+	return state.setIn(path, changedCollection);
 }
 
 /**
@@ -112,12 +112,8 @@ function updateMapElements(state, action, path) {
  */
 function updateCollectionElement(state, action, path) {
 	if (action.operations.update) {
-		// get a piece of state
-		const collection = state.get(path[0]);
-		// if the collection is nested
-		if (path.length > 1) {
-			return updateCollectionElement(collection, action, path.slice(1));
-		} else if (Map.isMap(collection)) {
+		const collection = state.getIn(path);
+		if (Map.isMap(collection)) {
 			return updateMapElements(state, action, path);
 		} else if (List.isList(collection)) {
 			return updateListElements(state, action);

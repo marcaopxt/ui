@@ -20,6 +20,9 @@ describe('check collection management reducer', () => {
 				environment: {
 					id: '1',
 					name: 'env 1',
+					obj: {
+						property: 'value',
+					},
 					workspace: {
 						id: '1',
 						name: 'workspace 1',
@@ -30,15 +33,26 @@ describe('check collection management reducer', () => {
 	});
 
 	it('should check mutating nested collection', () => {
+		const newValue = fromJS({ a: 'b' });
 		const mutatedState = collectionsReducers(state, {
 			type: 'REACT_CMF.COLLECTION_MUTATE',
 			id: 'collection1.environments.environment',
 			operations: {
 				update: {
-					workspace: fromJS({ a: 'b' }),
+					workspace: newValue,
 				}
 			}
 		});
+		const isStateLinksTheSame = state === mutatedState;
+		const isWorkspaceObjLinkTheSame = state.getIn(['collection1', 'environments', 'environment', 'workspace']) === mutatedState.getIn(['collection1', 'environments', 'environment', 'workspace']);
+		expect(isStateLinksTheSame).toBeFalsy();
+		expect(isWorkspaceObjLinkTheSame).toBeFalsy();
+		expect(
+			state.getIn(['collection1', 'environments', 'environmentsList']) === mutatedState.getIn(['collection1', 'environments', 'environmentsList'])
+		).toBeTruthy();
+		expect(
+			state.getIn(['collection1', 'environments', 'environment', 'obj']) === mutatedState.getIn(['collection1', 'environments', 'environment', 'obj'])
+		).toBeTruthy();
 	});
 
 	it('REACT_CMF.COLLECTION_ADD_OR_REPLACE should properly add data into store', () => {
