@@ -25,7 +25,7 @@ export function getId(element) {
  * @param action redux action
  * @returns {object} the new state
  */
-function addCollectionElement(state, action) {
+function addCollectionElement(state, action, path) {
 	if (action.operations.add) {
 		return action.operations.add.reduce((s, e) => {
 			const element = s.get(action.id);
@@ -74,7 +74,7 @@ function deleteMapElements(state, action) {
  * @param action redux action
  * @returns {object} the new state
  */
-function deleteCollectionElement(state, action) {
+function deleteCollectionElement(state, action, path) {
 	if (action.operations.delete) {
 		const collection = state.get(action.id);
 		if (Map.isMap(collection)) {
@@ -94,13 +94,13 @@ function updateListElements(state, action) {
 	return state.set(action.id, changedCollection);
 }
 
-function updateMapElements(state, action) {
+function updateMapElements(state, action, path) {
 	const updates = action.operations.update;
 	const changedCollection = Object.keys(updates).reduce(
 		(collectionAccu, id) => collectionAccu.set(id, updates[id]),
-		state.get(action.id),
+		state.get(path[0]),
 	);
-	return state.set(action.id, changedCollection);
+	return state.set(path[0], changedCollection);
 }
 
 /**
@@ -110,11 +110,15 @@ function updateMapElements(state, action) {
  * @param action redux action
  * @returns {object} the new state
  */
-function updateCollectionElement(state, action) {
+function updateCollectionElement(state, action, path) {
 	if (action.operations.update) {
-		const collection = state.get(action.id);
-		if (Map.isMap(collection)) {
-			return updateMapElements(state, action);
+		// get a piece of state
+		const collection = state.get(path[0]);
+		// if the collection is nested
+		if (path.length > 1) {
+			return updateCollectionElement(collection, action, path.slice(1));
+		} else if (Map.isMap(collection)) {
+			return updateMapElements(state, action, path);
 		} else if (List.isList(collection)) {
 			return updateListElements(state, action);
 		}
@@ -131,12 +135,13 @@ function updateCollectionElement(state, action) {
  * @returns {object} the new state
  */
 function mutateCollection(state, action) {
-	if (!action.operations || !state.has(action.id) || state.isEmpty()) {
+	const splitPath = Array.isArray(action.id) ? action.id : action.id.split('.');
+	if (!action.operations || !state.hasIn(splitPath) || state.isEmpty()) {
 		return state;
 	}
-	let newState = addCollectionElement(state, action);
-	newState = deleteCollectionElement(newState, action);
-	return updateCollectionElement(newState, action);
+	let newState = addCollectionElement(state, action, splitPath);
+	newState = deleteCollectionElement(newState, action, splitPath);
+	return updateCollectionElement(newState, action, splitPath);
 }
 
 /**

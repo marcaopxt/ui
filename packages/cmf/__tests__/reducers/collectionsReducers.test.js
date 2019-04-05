@@ -4,6 +4,42 @@ import collectionsReducers, { defaultState, getId } from '../../src/reducers/col
 
 describe('check collection management reducer', () => {
 	const initialState = defaultState.set('collection1', 'super data');
+	const state = fromJS({
+		collection1: {
+			environments: {
+				environmentsList: [
+					{
+						id: '1',
+						name: 'env 1',
+					},
+					{
+						id: '2',
+						name: 'env 2',
+					}
+				],
+				environment: {
+					id: '1',
+					name: 'env 1',
+					workspace: {
+						id: '1',
+						name: 'workspace 1',
+					}
+				}
+			}
+		}
+	});
+
+	it('should check mutating nested collection', () => {
+		const mutatedState = collectionsReducers(state, {
+			type: 'REACT_CMF.COLLECTION_MUTATE',
+			id: 'collection1.environments.environment',
+			operations: {
+				update: {
+					workspace: fromJS({ a: 'b' }),
+				}
+			}
+		});
+	});
 
 	it('REACT_CMF.COLLECTION_ADD_OR_REPLACE should properly add data into store', () => {
 		expect(collectionsReducers(initialState, {
@@ -209,3 +245,4 @@ describe('getId', () => {
 		expect(id).toBe('toto');
 	});
 });
+
