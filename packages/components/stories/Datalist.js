@@ -118,4 +118,37 @@ storiesOf('Datalist', module)
 				</Datalist>
 			</form>
 		);
+	})
+	.add('with actions', () => {
+		const actions = [
+			{
+				id: 'add-something',
+				label: 'Add something',
+				bsStyle: 'info',
+				icon: 'talend-plus-circle',
+				onClick: () => {},
+			},
+			{
+				id: 'do-something',
+				label: 'Do something',
+				bsStyle: 'success',
+				onClick: () => {},
+			},
+			{
+				id: 'dropdown',
+				label: 'Dropdown',
+				displayMode: 'dropdown',
+				bsStyle: 'info',
+				onClick: () => {},
+			},
+		];
+		return (
+			<form className="form">
+				<IconsProvider />
+				<h3>Single section :</h3>
+				<Datalist {...singleSectionProps} actions={actions} />
+				<h3>Multi section :</h3>
+				<Datalist {...propsMultiSection} actions={actions} />
+			</form>
+		);
 	});

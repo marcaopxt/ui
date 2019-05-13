@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import Icon from '../Icon';
 import CircularProgress from '../CircularProgress';
 import Emphasis from '../Emphasis';
+import Action from '../Actions/Action';
 import theme from './Typeahead.scss';
 
 export function renderInputComponent(props) {
@@ -60,6 +61,7 @@ export function renderItemsContainerFactory(
 	loading,
 	loadingText,
 	render = content => content,
+	actions = [],
 ) {
 	const isShown = items;
 	const noResult = items && !items.length;
@@ -109,6 +111,12 @@ export function renderItemsContainerFactory(
 						searching,
 					},
 					containerProps.ref,
+				)}
+				{actions.length > 0 && (
+					<div className={theme['actions-container']}>
+						<div>Other actions</div>
+						{actions.map(props => <Action {...props} />)}
+					</div>
 				)}
 			</div>
 		);

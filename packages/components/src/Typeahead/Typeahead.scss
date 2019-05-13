@@ -51,6 +51,15 @@ $tc-typeahead-items-font-size: 1.5rem !default;
 		box-shadow: $tc-typeahead-items-box-shadow;
 		overflow-y: auto;
 		z-index: $zindex-dropdown;
+
+		.actions-container {
+			padding: 10px 15px 15px 15px;
+			border-top: 1px solid $tc-typeahead-section-border-color;
+
+			:global .btn {
+				margin-right: 10px;
+			}
+		}
 	}
 
 	&.right {

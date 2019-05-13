@@ -96,6 +96,7 @@ function Typeahead({ onToggle, icon, position, docked, ...rest }) {
 			rest.isLoading,
 			rest.isLoadingText,
 			rest.children,
+			rest.actions,
 		),
 		renderItemData: { value: rest.value },
 	};
