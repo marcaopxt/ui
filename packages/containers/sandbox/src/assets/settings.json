@@ -12,13 +12,23 @@
         }
       }
     },
+    "menu:ComponentForm": {
+      "icon": "talend-burger",
+      "label": "ComponentForm",
+      "onClickDispatch": {
+        "type": "MENU_COMPONENT_FORM_CLICKED",
+        "cmf": {
+          "routerPush": "/ComponentForm/example"
+        }
+      }
+    },
     "menu:tacokitTitleMap": {
       "icon": "talend-burger",
       "label": "TCK async",
       "onClickDispatch": {
         "type": "MENU_COMPONENT_FORM_CLICKED",
         "cmf": {
-          "routerPush": "/tacokit/titleMap"
+          "routerPush": "/ComponentForm/titleMap"
         }
       }
     },
@@ -28,7 +38,7 @@
       "onClickDispatch": {
         "type": "MENU_COMPONENT_FORM_CLICKED",
         "cmf": {
-          "routerPush": "/tacokit/external-api"
+          "routerPush": "/ComponentForm/external-api"
         }
       }
     },
@@ -38,7 +48,7 @@
       "onClickDispatch": {
         "type": "MENU_COMPONENT_FORM_CLICKED",
         "cmf": {
-          "routerPush": "/tacokit/validation"
+          "routerPush": "/ComponentForm/validation"
         }
       }
     }
@@ -90,6 +100,7 @@
     "SidePanel#default": {
       "actionIds": [
         "menu:HeaderBar",
+        "menu:ComponentForm",
         "menu:tacokitTitleMap",
         "menu:tacokitValidation",
         "menu:tacokitExternalApi"
@@ -118,6 +129,12 @@
       "uiSpecPath": "ui",
       "triggerURL": "/api/v1/application/action",
       "className": "full-form"
+    },
+    "ComponentForm#example": {
+      "definitionURL": "/api/v1/forms/example",
+      "uiSpecPath": "ui",
+      "triggerURL": "/api/v1/application/action",
+      "className": "full-form"
     }
   },
   "routes": {
@@ -133,7 +150,7 @@
         "componentId": "HeaderBar"
       },
       {
-        "path": "tacokit",
+        "path": "ComponentForm",
         "component": "Layout",
         "childRoutes": [
           {
