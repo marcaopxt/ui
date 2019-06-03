@@ -9,7 +9,7 @@ import containersModule from '@talend/react-containers';
 import ComponentForm from '@talend/react-containers/lib/ComponentForm';
 import cmf from '@talend/react-cmf';
 import { createLogger } from 'redux-logger';
-import SandboxBody from './SandboxBody';
+import SandboxBody from './ComponentForm';
 import actions from './actions';
 import componentFormSagas from '../../../src/ComponentForm/ComponentForm.sagas';
 
