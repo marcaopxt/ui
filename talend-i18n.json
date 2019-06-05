@@ -1,6 +1,6 @@
 {
   "extract": {
-    "method": "yarn",
+    "method": "npm",
     "script": "extract-i18n",
     "target": "./i18n"
   },
