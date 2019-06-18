@@ -95,7 +95,7 @@ function ListDisplayMode({
 
 ListDisplayMode.defaultProps = {
 	id: uuid.v4(),
-	displayModesOptions: ['table', 'large'],
+	displayModesOptions: ['large', 'table'],
 	initialDisplayMode: 'table',
 };
 ListDisplayMode.propTypes = {
