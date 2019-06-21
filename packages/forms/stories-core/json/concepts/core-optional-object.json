@@ -1,0 +1,75 @@
+{
+  "jsonSchema": {
+    "type": "object",
+    "title": "Comment",
+    "properties": {
+      "nokey": {
+        "type": "object",
+        "title": "Optional Object without key",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": ["name"]
+      },
+      "entity": {
+        "type": "object",
+        "title": "Optional Object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": ["name"]
+      },
+      "requiredEntity": {
+        "type": "object",
+        "title": "Required Object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    "required": ["requiredEntity"]
+  },
+  "uiSchema": [
+    {
+      "widget": "fieldset",
+      "key": "entity",
+      "items": [
+        {
+          "key": "entity.name",
+          "description": "Optional object should let me do not display this field"
+        }
+      ]
+    },
+    {
+      "widget": "fieldset",
+      "required": true,
+      "key": "requiredEntity",
+      "items": [
+        {
+          "key": "requiredEntity.name",
+          "description": "Required object should not let me validate without it"
+        }
+      ]
+    },
+    {
+      "widget": "fieldset",
+      "title": "Entity without key",
+      "items": [
+        {
+          "key": "nokey.name",
+          "description": "Optional object should let me do not display this field"
+        }
+      ]
+    }
+  ]
+}

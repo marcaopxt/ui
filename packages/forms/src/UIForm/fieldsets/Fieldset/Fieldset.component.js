@@ -1,15 +1,29 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classnames from 'classnames';
+import { Action } from '@talend/react-components/lib/Actions';
 import Widget from '../../Widget';
 
 export default function Fieldset(props) {
 	const { schema, ...restProps } = props;
 	const { title, items, options } = schema;
-
+	const fieldsetClasses = classnames('form-group', { 'has-error': !props.isValid });
+	const onDelete = e => {
+		props.onChange(e, { schema, value: undefined });
+	};
 	return (
-		<fieldset className="form-group">
-			<legend className={classnames({ 'sr-only': options && options.hideTitle })}>{title}</legend>
+		<fieldset className={fieldsetClasses}>
+			<legend
+				className={classnames({
+					'sr-only': options && options.hideTitle,
+					required: schema.required,
+				})}
+			>
+				{title}
+				{!schema.required && props.value && (
+					<Action icon="talend-trash" onClick={onDelete} label="Delete object" hideLabel bsStyle="link" />
+				)}
+			</legend>
 			{items.map((itemSchema, index) => (
 				<Widget {...restProps} key={index} schema={itemSchema} />
 			))}

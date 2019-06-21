@@ -113,10 +113,20 @@ export function validateSimple(
 ) {
 	const results = {};
 	const { key, items } = mergedSchema;
+	if (key) {
+		results[key] = validateValue(mergedSchema, value, properties, customValidationFn);
+	}
+	/**
+	 * case 1: as before, no key means displayed field are validated
+	 * case 2: have a key
+	 * case 2.1: is required -> deep validation
+	 */
+	if (mergedSchema.required && mergedSchema.type === 'object') {
+		if (!value || Object.keys(value).length === 0) {
 
-	results[key] = validateValue(mergedSchema, value, properties, customValidationFn);
-
-	if (deepValidation && items) {
+		}
+	}
+	if (deepValidation && items && (!mergedSchema.key || mergedSchema.required || value)) {
 		// eslint-disable-next-line no-use-before-define
 		const subResults = validateAll(items, properties, customValidationFn);
 		Object.assign(results, subResults);
