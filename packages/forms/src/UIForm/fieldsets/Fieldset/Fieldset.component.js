@@ -8,8 +8,11 @@ export default function Fieldset(props) {
 	const { schema, ...restProps } = props;
 	const { title, items, options } = schema;
 	const fieldsetClasses = classnames('form-group', { 'has-error': !props.isValid });
-	const onDelete = e => {
-		props.onChange(e, { schema, value: undefined });
+	const [toggle, setToggle] = React.useState(!!props.value);
+	const onToggle = e => {
+		props.onChange(e, { schema, value: toggle ? undefined : {} });
+		props.onFinish(e, { schema, value: toggle ? undefined : {} });
+		setToggle(!toggle);
 	};
 	return (
 		<fieldset className={fieldsetClasses}>
@@ -20,8 +23,8 @@ export default function Fieldset(props) {
 				})}
 			>
 				{title}
-				{!schema.required && props.value && (
-					<Action icon="talend-trash" onClick={onDelete} label="Delete object" hideLabel bsStyle="link" />
+				{schema.key && !schema.required && (
+					<Action icon={toggle ? 'talend-trash' : 'talend-plus'} label="check" onClick={onToggle} hideLabel bsStyle="link" />
 				)}
 			</legend>
 			{items.map((itemSchema, index) => (

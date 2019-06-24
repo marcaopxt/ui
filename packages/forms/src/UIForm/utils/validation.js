@@ -116,20 +116,30 @@ export function validateSimple(
 	if (key) {
 		results[key] = validateValue(mergedSchema, value, properties, customValidationFn);
 	}
-	/**
-	 * case 1: as before, no key means displayed field are validated
-	 * case 2: have a key
-	 * case 2.1: is required -> deep validation
-	 */
-	if (mergedSchema.required && mergedSchema.type === 'object') {
-		if (!value || Object.keys(value).length === 0) {
-
+	if (deepValidation && items) {
+		const doDeepValidation = () => {
+			// eslint-disable-next-line no-use-before-define
+			const subResults = validateAll(items, properties, customValidationFn);
+			Object.assign(results, subResults);
+		};
+		/**
+		 * case 1: as before, no key means displayed field are validated
+		 * case 2: have a key
+		 * case 2.1: is required -> deep validation
+		 */
+		if (!mergedSchema.key) {
+			doDeepValidation();
+		} else if (mergedSchema.required) {
+			// by pass global validation just show a message for required
+			// if (!value || Object.keys(value).length === 0) {
+			// 	doDeepValidation();
+			// } else {
+			// 	// drop existing errors
+			// 	results[mergedSchema.key.join(',')] = null;
+			// }
+		} else if (!mergedSchema.required && value) {
+			// doDeepValidation();
 		}
-	}
-	if (deepValidation && items && (!mergedSchema.key || mergedSchema.required || value)) {
-		// eslint-disable-next-line no-use-before-define
-		const subResults = validateAll(items, properties, customValidationFn);
-		Object.assign(results, subResults);
 	}
 
 	return results;

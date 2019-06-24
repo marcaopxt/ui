@@ -18,6 +18,10 @@
         "type": "object",
         "title": "Optional Object",
         "properties": {
+          "displayed": {
+            "title": "add optional object",
+            "type": "string"
+          },
           "name": {
             "title": "Name",
             "type": "string"
@@ -41,23 +45,19 @@
   },
   "uiSchema": [
     {
+      "widget": "checkbox",
+      "key": "entity"
+    },
+    {
       "widget": "fieldset",
-      "key": "entity",
+      "title": "Optional object",
+      "condition": {
+        "!!": [{ "var": "entity"}]
+      },
       "items": [
         {
           "key": "entity.name",
           "description": "Optional object should let me do not display this field"
-        }
-      ]
-    },
-    {
-      "widget": "fieldset",
-      "required": true,
-      "key": "requiredEntity",
-      "items": [
-        {
-          "key": "requiredEntity.name",
-          "description": "Required object should not let me validate without it"
         }
       ]
     },
