@@ -4,7 +4,8 @@ import { action } from '@storybook/addon-actions';
 import talendIcons from '@talend/icons/dist/react';
 import withPropsCombinations from 'react-storybook-addon-props-combinations';
 
-import { Action, IconsProvider } from '../src/index';
+import { Action } from '../src/Actions';
+import IconsProvider from '../src/IconsProvider';
 
 import theme from './Action.scss';
 
@@ -68,7 +69,7 @@ class DisableActionButton extends React.Component {
 	}
 }
 
-storiesOf('Action', module)
+storiesOf('Buttons/Button', module)
 	.addDecorator(story => (
 		<div className="col-lg-offset-2 col-lg-8">
 			<IconsProvider defaultIcons={icons} />

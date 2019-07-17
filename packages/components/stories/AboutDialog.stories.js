@@ -1,12 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { AboutDialog, IconsProvider } from '../src/index';
+import AboutDialog from '../src/AboutDialog';
+import IconsProvider from '../src/IconsProvider';
 
 const props = {
 	show: true,
 	onToggle: action('onToggle'),
-	version: 'Summer \'18',
+	version: "Summer '18",
 	icon: 'talend-tdp-colored',
 	services: ['API', 'Dataset', 'Preparation', 'Transformation'].map(name => ({
 		version: '2.8.0-SNAPSHOT',
@@ -15,8 +16,7 @@ const props = {
 	})),
 };
 
-
-storiesOf('AboutDialog', module)
+storiesOf('Modales/AboutDialog', module)
 	.addDecorator(story => (
 		<div>
 			<IconsProvider />

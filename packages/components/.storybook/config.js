@@ -9,7 +9,8 @@ import 'focus-outline-manager';
 import '../stories/config/i18n';
 
 function loadStories() {
-	require('../stories');
+	// require('../stories');
+	require.context('../stories', true, /\.stories\.js$/);
 }
 
 addDecorator(withA11y);
