@@ -160,7 +160,7 @@ function GridContainer({ isLoading = false, skeletonConfiguration }) {
 	);
 }
 
-storiesOf('Components/Specific Feature/Dashboard', module)
+storiesOf('Components/Product Features/Dashboard', module)
 	.addDecorator(story => (
 		<div>
 			<IconsProvider defaultIcons={icons} />

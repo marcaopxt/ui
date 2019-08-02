@@ -10,7 +10,7 @@ const icons = {
 };
 const config = { app_id: 'fyq3wodw' };
 
-storiesOf('Components/Specific Feature/Intercom', module).add('default', () => (
+storiesOf('Components/Product Features/Intercom', module).add('default', () => (
 	<React.Fragment>
 		<IconsProvider defaultIcons={icons} />
 		<ActionIntercom id="intercom" config={config} />

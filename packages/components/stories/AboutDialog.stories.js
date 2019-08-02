@@ -15,7 +15,7 @@ const props = {
 	})),
 };
 
-storiesOf('Components/Modal/AboutModal', module)
+storiesOf('Components/Navigation & Layout/Modal/AboutModal', module)
 	.addDecorator(story => (
 		<div>
 			<IconsProvider />

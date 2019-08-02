@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import talendIcons from '@talend/icons/dist/react';
-import { LanguageSwitcher } from '../../../.storybook/i18n';
+// import { LanguageSwitcher } from '../../../.storybook/i18n';
 import { IconsProvider, Layout, SidePanel } from '../src/index';
 
 import { TALEND_T7_THEME_APPS as apps, TALEND_T7_THEME_CLASSNAME } from '../src/Layout/constants';
@@ -77,7 +77,7 @@ const stories = storiesOf('Components/Navigation & Layout/SidePanel', module);
 stories
 	.addDecorator(story => (
 		<div>
-			<LanguageSwitcher />
+			{/* <LanguageSwitcher /> */}
 			<IconsProvider defaultIcons={icons} />
 			{story()}
 		</div>

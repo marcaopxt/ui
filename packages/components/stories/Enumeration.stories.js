@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { Enumeration, IconsProvider } from '../src/index';
-import { LanguageSwitcher } from '../../../.storybook/i18n';
+// import { LanguageSwitcher } from '../../../.storybook/i18n';
 
 import theme from './Enumeration.scss';
 
@@ -308,7 +308,6 @@ storiesOf('Components/Controls/Enumeration', module)
 	.add('default - empty list with i18n', () => (
 		<div>
 			<p>Empty list by default:</p>
-			<LanguageSwitcher />
 			<IconsProvider />
 			<Enumeration {...defaultEmptyListProps} />
 		</div>

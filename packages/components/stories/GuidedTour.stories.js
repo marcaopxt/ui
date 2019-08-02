@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { withTranslation } from 'react-i18next';
-import { LanguageSwitcher } from '../../../.storybook/i18n';
+// import { LanguageSwitcher } from '../../../.storybook/i18n';
 
 import { GuidedTour } from '../src/index';
 import I18N_DOMAIN_COMPONENTS from '../src/constants';
@@ -273,10 +273,10 @@ const getLayoutWithLoremIpsum = () => (
 	</div>
 );
 
-storiesOf('Components/Specific Feature/GuidedTour', module)
+storiesOf('Components/Product Features/GuidedTour', module)
 	.addDecorator(story => (
 		<React.Fragment>
-			<LanguageSwitcher />
+			{/* <LanguageSwitcher /> */}
 			<React.Fragment>
 				{story()}
 				{getLayoutWithLoremIpsum()}
