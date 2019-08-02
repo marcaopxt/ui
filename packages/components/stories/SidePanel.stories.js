@@ -72,7 +72,7 @@ const items = [
 	},
 ];
 
-const stories = storiesOf('Components/Navigation & Layout/SidePanel', module);
+const stories = storiesOf('Navigation & Layout/SidePanel', module);
 
 stories
 	.addDecorator(story => (

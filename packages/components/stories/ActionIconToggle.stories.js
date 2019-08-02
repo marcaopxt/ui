@@ -67,7 +67,7 @@ class DisableActionIconToggle extends React.Component {
 	}
 }
 
-storiesOf('Components/Controls/IconToggle', module)
+storiesOf('Controls/IconToggle', module)
 	.addDecorator(story => (
 		<div className="col-lg-offset-2 col-lg-8">
 			<IconsProvider defaultIcons={icons} />
@@ -93,7 +93,7 @@ storiesOf('Components/Controls/IconToggle', module)
 			<p>You can customize a specific icon toggle using a sass mixin</p>
 			<pre>
 				{`// sass file
-@import '~@talend/react-components/lib/Actions/ActionIconToggle/ActionIconToggle.scss'
+@import '~@talend/react-lib/Actions/ActionIconToggle/ActionIconToggle.scss'
 $my-btn-size: 4rem;
 $my-btn-icon-size: 2.5rem;
 .tc-icon-toggle.my-custom-icon-toggle {

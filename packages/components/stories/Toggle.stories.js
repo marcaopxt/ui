@@ -31,7 +31,7 @@ const withLabel = {
 	label: 'Some label',
 };
 
-storiesOf('Components/Controls/Toggle', module).add('default', () => (
+storiesOf('Controls/Toggle', module).add('default', () => (
 	<div>
 		<h1>Toggle</h1>
 		<h2>Definition</h2>

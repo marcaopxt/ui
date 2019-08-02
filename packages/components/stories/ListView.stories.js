@@ -113,7 +113,7 @@ const withNestedItems = {
 	showToggleAll: false,
 };
 
-storiesOf('Components/Controls/OptionList', module)
+storiesOf('Controls/OptionList', module)
 	.addDecorator(story => (
 		<div>
 			{/* <LanguageSwitcher /> */}

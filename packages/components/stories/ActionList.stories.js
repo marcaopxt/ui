@@ -53,7 +53,7 @@ const actions = [
 	},
 ];
 
-const stories = storiesOf('Components/Unknown/ActionList', module);
+const stories = storiesOf('Unknown/ActionList', module);
 
 stories
 	.addDecorator(story => (

@@ -62,7 +62,7 @@ class InteractiveTabs extends React.Component {
 	}
 }
 
-const stories = storiesOf('Components/Navigation & Layout/Tabs', module);
+const stories = storiesOf('Navigation & Layout/Tabs', module);
 
 stories
 	.add('default', () => (

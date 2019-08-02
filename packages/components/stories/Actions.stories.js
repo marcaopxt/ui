@@ -63,7 +63,7 @@ const actions = [
 	},
 ];
 
-storiesOf('Components/Unknown/Actions', module).add('default', () => (
+storiesOf('Unknown/Actions', module).add('default', () => (
 	<div>
 		<p>By default :</p>
 		<div id="default">

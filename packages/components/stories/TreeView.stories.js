@@ -280,7 +280,7 @@ cornerCaseLongName.structure = [
 
 const style = { width: '300px', border: '1px solid #eee', marginLeft: '10px' };
 
-storiesOf('Components/Product Features/TreeView/FolderTreeView', module)
+storiesOf('Product Features/TreeView/FolderTreeView', module)
 	.add('default', () => (
 		<div>
 			<h1>TreeView</h1>

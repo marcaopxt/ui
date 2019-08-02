@@ -12,7 +12,7 @@ const containerStyle = {
 	width: '100vw',
 };
 
-const decoratedStories = storiesOf('Components/Legacy/Loader', module).addDecorator(story => (
+const decoratedStories = storiesOf('Legacy/Loader', module).addDecorator(story => (
 	<div style={containerStyle}>{story()}</div>
 ));
 

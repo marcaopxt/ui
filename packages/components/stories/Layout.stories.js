@@ -168,14 +168,12 @@ const tabs = {
 	selectedKey: '2',
 };
 
-const stories = storiesOf('Components/Navigation & Layout/AppLayout', module).addDecorator(
-	story => (
-		<div>
-			<IconsProvider defaultIcons={icons} />
-			{story()}
-		</div>
-	),
-);
+const stories = storiesOf('Navigation & Layout/AppLayout', module).addDecorator(story => (
+	<div>
+		<IconsProvider defaultIcons={icons} />
+		{story()}
+	</div>
+));
 
 const appStyle = require('./config/themes.scss');
 

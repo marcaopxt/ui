@@ -401,7 +401,7 @@ const StoryDecorator = story => (
 	</div>
 );
 
-storiesOf('Components/Product Features/List/Table view', module)
+storiesOf('Product Features/List/Table view', module)
 	.addDecorator(StoryDecorator)
 	.add('Default', () => (
 		<div style={{ height: '70vh' }} className="virtualized-list">
@@ -550,7 +550,7 @@ storiesOf('Components/Product Features/List/Table view', module)
 		);
 	});
 
-storiesOf('Components/Product Features/List/Expanded view', module)
+storiesOf('Product Features/List/Expanded view', module)
 	.addDecorator(StoryDecorator)
 	.add('Default', () => (
 		<div style={{ height: '70vh' }} className="virtualized-list">
@@ -664,7 +664,7 @@ storiesOf('Components/Product Features/List/Expanded view', module)
 		);
 	});
 
-storiesOf('Components/Product Features/List/Custom view', module)
+storiesOf('Product Features/List/Custom view', module)
 	.addDecorator(StoryDecorator)
 	.add('Empty list', () => {
 		const emptyListProps = cloneDeep(props);
@@ -722,7 +722,7 @@ storiesOf('Components/Product Features/List/Custom view', module)
 		);
 	});
 
-storiesOf('Components/Product Features/List/Toolbar', module)
+storiesOf('Product Features/List/Toolbar', module)
 	.addDecorator(StoryDecorator)
 	.add('Filter', () => {
 		const dockedProps = cloneDeep(props);
@@ -791,7 +791,7 @@ storiesOf('Components/Product Features/List/Toolbar', module)
 		);
 	});
 
-storiesOf('Components/Product Features/List/TODO', module)
+storiesOf('Product Features/List/TODO', module)
 	.addDecorator(StoryDecorator)
 	.add('i18n', () => (
 		<div style={{ height: '70vh' }} className="virtualized-list">
