@@ -51,7 +51,7 @@ describe('FocusManager', () => {
 		expect(handler).not.toHaveBeenCalled();
 	});
 
-	it('should not call onFocusInn when we click inside', () => {
+	it('should not call onFocusIn when we click inside', () => {
 		// given
 		const handler = jest.fn();
 		const wrapper = mount(
