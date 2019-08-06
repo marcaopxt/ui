@@ -338,5 +338,5 @@ storiesOf('DatePicker', module)
 		);
 	})
 	.add('Time Picker', () => {
-		return <TimePicker />
+		return <InputDateTimePicker />
 	});

@@ -2,7 +2,7 @@ import React from 'react';
 import { Popper } from 'react-popper';
 import FocusManager from '../FocusManager';
 
-class TimePicker extends React.Component {
+class InputTimePicker extends React.Component {
 	constructor(props) {
 		super(props);
 		this.onFocus = this.onFocus.bind(this);
@@ -37,11 +37,11 @@ class TimePicker extends React.Component {
 	onBlur() {
 		// this.setState({ open: false });
 	}
-	onSelect(e, option, index) {
+	onSelect(e, option) {
 		this.setState({
 			value: option,
 		});
-		this.setState(prevState => ({ open: false }));
+		this.setState(() => ({ open: false }));
 	}
 	onInput(event) {
 		const firstMatch = this.options.findIndex(option => option.includes(event.target.value));
@@ -144,4 +144,4 @@ class TimePicker extends React.Component {
 	}
 }
 
-export default TimePicker;
+export default InputTimePicker;
