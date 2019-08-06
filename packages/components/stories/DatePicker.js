@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { IconsProvider } from '../src/index';
 
 import InputDateTimePicker, { DateTime } from '../src/DateTimePickers';
-import TimePicker from '../src/TimePicker/TimePicker.component';
+import InputTimePicker from '../src/DateTimePickers/InputTimePicker';
 
 class TestPickerWrapper extends React.Component {
 	static propTypes = {
@@ -338,5 +338,5 @@ storiesOf('DatePicker', module)
 		);
 	})
 	.add('Time Picker', () => {
-		return <InputDateTimePicker />
+		return <InputTimePicker />
 	});

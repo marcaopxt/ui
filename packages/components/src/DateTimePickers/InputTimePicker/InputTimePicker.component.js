@@ -1,6 +1,6 @@
 import React from 'react';
 import { Popper } from 'react-popper';
-import FocusManager from '../FocusManager';
+import FocusManager from '../../FocusManager';
 
 class InputTimePicker extends React.Component {
 	constructor(props) {
