@@ -2,9 +2,9 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import { DateTimeContext } from '../../Context';
-import Picker from './Picker.component';
+import DatePicker from './DatePicker.component';
 
-describe('DateTime.Picker', () => {
+describe('DateTime.DatePicker', () => {
 	it('should render', () => {
 		// given
 		const managerValue = {
@@ -30,7 +30,7 @@ describe('DateTime.Picker', () => {
 		// when
 		const wrapper = mount(
 			<DateTimeContext.Provider value={managerValue}>
-				<Picker other="custom props" />
+				<DatePicker other="custom props" />
 			</DateTimeContext.Provider>,
 		);
 
@@ -70,7 +70,7 @@ describe('DateTime.Picker', () => {
 
 		const wrapper = mount(
 			<DateTimeContext.Provider value={managerValue}>
-				<Picker />
+				<DatePicker />
 			</DateTimeContext.Provider>,
 		);
 		expect(managerValue.pickerManagement.onSubmit).not.toBeCalled();
