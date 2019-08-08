@@ -13,7 +13,6 @@ class DateTimePicker extends React.Component {
 		super(props);
 
 		const selectedDate = props.selection.date;
-		const selectedTime = props.selection.time;
 
 		const initialCalendarDate = selectedDate === undefined ? new Date() : selectedDate;
 
@@ -24,7 +23,6 @@ class DateTimePicker extends React.Component {
 				year: getYear(initialCalendarDate),
 			},
 			selectedDate,
-			selectedTime,
 			allowFocus: !props.manageFocus,
 		};
 
@@ -32,7 +30,6 @@ class DateTimePicker extends React.Component {
 		this.onSelectCalendarYear = this.onSelectCalendarYear.bind(this);
 		this.onSelectCalendarMonthYear = this.onSelectCalendarMonthYear.bind(this);
 		this.onSelectDate = this.onSelectDate.bind(this);
-		this.onSelectTime = this.onSelectTime.bind(this);
 
 		this.allowFocus = this.setAllowFocus.bind(this, true);
 		this.disallowFocus = this.setAllowFocus.bind(this, false);
@@ -86,13 +83,6 @@ class DateTimePicker extends React.Component {
 		});
 	}
 
-	onSelectTime(event, selectedTime, field) {
-		event.persist();
-		this.setState({ selectedTime }, () => {
-			this.submit(event, field);
-		});
-	}
-
 	onSelectCalendarMonthYear(newCalendar, callback) {
 		this.setState(
 			previousState => ({
@@ -141,12 +131,8 @@ class DateTimePicker extends React.Component {
 					calendar={this.state.calendar}
 					onSelectDate={this.onSelectDate}
 					onSelectMonthYear={this.onSelectCalendarMonthYear}
-					onSelectTime={this.onSelectTime}
 					onTitleClick={this.setMonthYearView}
 					selectedDate={this.state.selectedDate}
-					selectedTime={this.state.selectedTime}
-					useSeconds={this.props.useSeconds}
-					useTime={this.props.useTime}
 					useUTC={this.props.useUTC}
 				/>
 			);
@@ -200,14 +186,6 @@ DateTimePicker.propTypes = {
 	 * Callback triggered when date and time are selected
 	 */
 	onSubmit: PropTypes.func.isRequired,
-	/**
-	 * Display the seconds
-	 */
-	useSeconds: PropTypes.bool,
-	/**
-	 * Display time picker
-	 */
-	useTime: PropTypes.bool,
 	/**
 	 * Timezone is UTC
 	 */
