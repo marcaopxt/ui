@@ -11,7 +11,7 @@ import { DateTimeContext } from '../DateTime/Context';
 import DateTime from '../DateTime';
 import { focusOnCalendar } from '../../Gesture/withCalendarGesture';
 
-import theme from './InputDateTimePicker.scss';
+import theme from './InputDatePicker.scss';
 
 const PROPS_TO_OMIT_FOR_INPUT = [
 	'dateFormat',
@@ -26,7 +26,7 @@ const PROPS_TO_OMIT_FOR_INPUT = [
 	'onChange',
 ];
 
-class InputDateTimePicker extends React.Component {
+class InputDatePicker extends React.Component {
 	static propTypes = {
 		id: PropTypes.string.isRequired,
 		selectedDateTime: PropTypes.oneOfType([
@@ -153,7 +153,7 @@ class InputDateTimePicker extends React.Component {
 
 	render() {
 		const inputProps = omit(this.props, PROPS_TO_OMIT_FOR_INPUT);
-		const datePicker = [
+		const dateTimePicker = [
 			<DateTime.Input
 				{...inputProps}
 				id={`${this.props.id}-input`}
@@ -188,44 +188,32 @@ class InputDateTimePicker extends React.Component {
 		].filter(Boolean);
 
 		return (
-			<DateTime.Manager
-				dateFormat={this.props.dateFormat}
-				formMode={this.props.formMode}
-				id={this.props.id}
-				required={this.props.required}
-				selectedDateTime={this.props.selectedDateTime}
-				useSeconds={this.props.useSeconds}
-				useTime={this.props.useTime}
-				useUTC={this.props.useUTC}
-				onChange={this.onChange}
-			>
-				<DateTimeContext.Consumer>
-					{({ formManagement }) => (
-						<FocusManager
-							divRef={ref => {
-								this.containerRef = ref;
-							}}
-							onClick={this.onClick}
-							onFocusIn={this.onFocus}
-							onFocusOut={event => {
-								this.onBlur(event, formManagement);
-							}}
-							onKeyDown={event => {
-								this.onKeyDown(event, formManagement);
-							}}
-						>
-							{this.props.formMode ? (
-								<form key="form" onSubmit={formManagement.onSubmit}>
-									{datePicker}
-								</form>
-							) : (
-								datePicker
-							)}
-						</FocusManager>
-					)}
-				</DateTimeContext.Consumer>
-			</DateTime.Manager>
+			<DateTimeContext.Consumer>
+				{({ formManagement }) => (
+					<FocusManager
+						divRef={ref => {
+							this.containerRef = ref;
+						}}
+						onClick={this.onClick}
+						onFocusIn={this.onFocus}
+						onFocusOut={event => {
+							this.onBlur(event, formManagement);
+						}}
+						onKeyDown={event => {
+							this.onKeyDown(event, formManagement);
+						}}
+					>
+						{this.props.formMode ? (
+							<form key="form" onSubmit={formManagement.onSubmit}>
+								{dateTimePicker}
+							</form>
+						) : (
+								dateTimePicker
+						)}
+					</FocusManager>
+				)}
+			</DateTimeContext.Consumer>
 		);
 	}
 }
-export default InputDateTimePicker;
+export default InputDatePicker;

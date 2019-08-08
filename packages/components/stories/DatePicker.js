@@ -4,6 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { IconsProvider } from '../src/index';
 
 import InputDateTimePicker, { DateTime } from '../src/DateTimePickers';
+import InputDateTimePicker2 from '../src/DateTimePickers/InputDateTimePicker/InputDateTimePicker.component2';
 
 class TestPickerWrapper extends React.Component {
 	static propTypes = {
@@ -58,7 +59,7 @@ class TestPickerWrapper extends React.Component {
 					</button>
 				</div>
 				<br />
-				<InputDateTimePicker
+				<InputDateTimePicker2
 					{...this.props}
 					selectedDateTime={this.state.selectedDateTime}
 					onChange={action('onChange')}
@@ -284,4 +285,15 @@ storiesOf('DatePicker', module)
 				</div>
 			</div>
 		);
+	})
+	.add('Date picker - playyard', () => {
+		<div>
+			<IconsProvider />
+			<h1>DatePicker</h1>
+			<p>
+				Default date picker doesn't include time<br />
+				It comes with classical keyboard gesture.
+			</p>
+			<TestPickerWrapper id="my-date-picker" onChange={action('onChange')} name="Datetime" />
+		</div>
 	});
