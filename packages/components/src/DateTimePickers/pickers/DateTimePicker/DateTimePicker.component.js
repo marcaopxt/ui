@@ -46,10 +46,8 @@ class DateTimePicker extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		const newSelectedDate = nextProps.selection.date;
-		const newSelectedTime = nextProps.selection.time;
 		const needToUpdateDate = newSelectedDate !== this.state.selectedDate;
-		const needToUpdateTime = newSelectedTime !== this.state.selectedTime;
-		const noNeedToUpdateState = !needToUpdateDate && !needToUpdateTime;
+		const noNeedToUpdateState = !needToUpdateDate;
 
 		if (noNeedToUpdateState) {
 			return;
@@ -57,7 +55,6 @@ class DateTimePicker extends React.Component {
 
 		const newState = {
 			selectedDate: newSelectedDate,
-			selectedTime: newSelectedTime,
 		};
 		if (needToUpdateDate && newSelectedDate) {
 			newState.calendar = {
@@ -116,7 +113,6 @@ class DateTimePicker extends React.Component {
 	submit(event, field) {
 		this.props.onSubmit(event, {
 			date: this.state.selectedDate,
-			time: this.state.selectedTime,
 			field,
 		});
 	}
