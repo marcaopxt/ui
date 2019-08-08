@@ -26,7 +26,7 @@ const PROPS_TO_OMIT_FOR_INPUT = [
 	'onChange',
 ];
 
-class InputDatePicker extends React.Component {
+class InputTimePicker extends React.Component {
 	static propTypes = {
 		id: PropTypes.string.isRequired,
 		selectedDateTime: PropTypes.oneOfType([
@@ -147,7 +147,7 @@ class InputDatePicker extends React.Component {
 				...extra,
 			};
 		});
-	}
+    }
 
 	render() {
 		const inputProps = omit(this.props, PROPS_TO_OMIT_FOR_INPUT);
@@ -158,7 +158,8 @@ class InputDatePicker extends React.Component {
 				key="input"
 				inputRef={ref => {
 					this.inputRef = ref;
-				}}
+                }}
+                placeholder={""}
 			/>,
 			this.state.showPicker && (
 				<Popper
@@ -191,6 +192,7 @@ class InputDatePicker extends React.Component {
 			<DateTimeContext.Consumer>
 				{({ formManagement }) => (
 					<FocusManager
+						style={{ display: 'inline-block' }}
 						divRef={ref => {
 							this.containerRef = ref;
 						}}
@@ -216,4 +218,4 @@ class InputDatePicker extends React.Component {
 		);
 	}
 }
-export default InputDatePicker;
+export default InputTimePicker;

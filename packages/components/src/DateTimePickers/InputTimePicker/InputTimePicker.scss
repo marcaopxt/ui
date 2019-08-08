@@ -1,0 +1,11 @@
+$tc-timepicker-width: 31rem !default;
+$tc-timepicker-background: $white !default;
+$tc-timepicker-box-shadow: 0 0.1rem 0.3rem 0 rgba(0, 0, 0, 0.2) !default;
+$tc-timepicker-z-index: $zindex-dropdown !default;
+
+.popper {
+	width: $tc-timepicker-width;
+	background: $tc-timepicker-background;
+	box-shadow: $tc-timepicker-box-shadow;
+	z-index: $tc-timepicker-z-index;
+}

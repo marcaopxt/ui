@@ -189,6 +189,7 @@ class InputDatePicker extends React.Component {
 			<DateTimeContext.Consumer>
 				{({ formManagement }) => (
 					<FocusManager
+						style={{ display: 'inline-block' }}
 						divRef={ref => {
 							this.containerRef = ref;
 						}}
