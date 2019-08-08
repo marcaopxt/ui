@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import DebounceInput from 'react-debounce-input';
 
 import { DateTimeContext } from '../Context';
+import { extractPartsFromDateTimeFormat } from '../date-extraction';
 
 export default function Input(props) {
 	const { datetime, inputManagement, errorManagement } = useContext(DateTimeContext);
-	const textInput = props.type === 'date' ? datetime.dateTextInput : datetime.timeTextInput;
+
 	return (
 		<DebounceInput
 			aria-describedby={errorManagement.inputErrorId}
@@ -14,13 +15,19 @@ export default function Input(props) {
 			className="form-control"
 			debounceTimeout={300}
 			onFocus={errorManagement.onInputFocus}
-			value={textInput}
+			value={datetime.textInput}
 			{...inputManagement}
 			{...props}
 			type="text"
+			placeholder={extractPartsFromDateTimeFormat(inputManagement.placeholder, props.type)}
 		/>
 	);
 }
+
+Input.defaultProps = {
+	type: 'date',
+};
+
 Input.propTypes = {
 	type: PropTypes.oneOf(['date', 'time']).isRequired,
 };

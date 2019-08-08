@@ -24,7 +24,7 @@ describe('DateTime.Input', () => {
 		// when
 		const wrapper = mount(
 			<DateTimeContext.Provider value={managerValue}>
-				<Input aria-labelledby="labelId" />
+				<Input aria-labelledby="labelId" type="date" />
 			</DateTimeContext.Provider>,
 		);
 
@@ -35,6 +35,9 @@ describe('DateTime.Input', () => {
 	it('should call manager focus callback in input focus', () => {
 		// given
 		const managerValue = {
+			inputManagement: {
+				placeholder: 'YYYY-MM-DD',
+			},
 			errorManagement: {
 				onInputFocus: jest.fn(),
 			},
@@ -45,7 +48,7 @@ describe('DateTime.Input', () => {
 
 		const wrapper = mount(
 			<DateTimeContext.Provider value={managerValue}>
-				<Input aria-labelledby="labelId" />
+				<Input aria-labelledby="labelId" type="date" />
 			</DateTimeContext.Provider>,
 		);
 		expect(managerValue.errorManagement.onInputFocus).not.toBeCalled();
