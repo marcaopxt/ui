@@ -9,6 +9,7 @@ import { Popper } from 'react-popper';
 import FocusManager from '../../FocusManager';
 import { DateTimeContext } from '../DateTime/Context';
 import DateTime from '../DateTime';
+import TimePicker from '../DateTime/Picker/TimePicker';
 import { focusOnCalendar } from '../../Gesture/withCalendarGesture';
 
 import theme from './InputTimePicker.scss';
@@ -147,7 +148,7 @@ class InputTimePicker extends React.Component {
 				...extra,
 			};
 		});
-    }
+	}
 
 	render() {
 		const inputProps = omit(this.props, PROPS_TO_OMIT_FOR_INPUT);
@@ -158,8 +159,9 @@ class InputTimePicker extends React.Component {
 				key="input"
 				inputRef={ref => {
 					this.inputRef = ref;
-                }}
-                placeholder={""}
+				}}
+				placeholder="HH:mm"
+				inputType="time"
 			/>,
 			this.state.showPicker && (
 				<Popper
@@ -178,9 +180,7 @@ class InputTimePicker extends React.Component {
 				>
 					{({ ref, style }) => (
 						<div id={this.popoverId} className={theme.popper} style={style} ref={ref}>
-							<ul>
-                                <li>hello world</li>
-                            </ul>
+							<TimePicker {...this.props} />
 							{this.props.formMode && <DateTime.Validation />}
 						</div>
 					)}

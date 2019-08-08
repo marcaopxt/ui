@@ -556,6 +556,8 @@ function extractParts(value, options) {
 		time: initTime(options),
 		datetime: undefined,
 		textInput: '',
+		dateTextInput: '',
+		timeTextInput: '',
 		errors: [],
 	};
 }
@@ -571,4 +573,5 @@ export {
 	extractPartsFromDateAndTime,
 	extractPartsFromTextInput,
 	getFullDateFormat,
+	strToTime,
 };

@@ -67,7 +67,7 @@ class InputDateTimePicker extends React.Component {
 				onChange={this.onChange}
 			>
 				<InputDatePicker {...this.props} />
-				<InputTimePicker {...this.props} />
+				{this.props.useTime && <InputTimePicker {...this.props} />}
 			</DateTime.Manager>
 		);
 	}

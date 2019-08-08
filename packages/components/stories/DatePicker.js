@@ -65,6 +65,7 @@ class TestPickerWrapper extends React.Component {
 					onChange={action('onChange')}
 					onBlur={action('onBlur')}
 					name="Datetime"
+					useTime
 				/>
 			</form>
 		);

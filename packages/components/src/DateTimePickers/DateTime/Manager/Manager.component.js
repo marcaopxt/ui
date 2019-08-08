@@ -115,7 +115,7 @@ class ContextualManager extends React.Component {
 
 	onPickerChange(event, { date, time, field }) {
 		const isTimeUpdate = [FIELD_HOURS, FIELD_MINUTES, FIELD_SECONDS].includes(field);
-		const nextState = extractPartsFromDateAndTime(date, time, this.getDateOptions());
+		const nextState = extractPartsFromDateAndTime(date, this.getDateOptions());
 
 		// we need to retrieve the input error from nextState to add them to the current one
 		// because, by changing the picker, we update the textInput so we need to update its errors
@@ -218,6 +218,8 @@ class ContextualManager extends React.Component {
 				value={{
 					datetime: {
 						textInput: this.state.textInput,
+						dateTextInput: this.state.dateTextInput,
+						timeTextInput: this.state.timeTextInput,
 						date: this.state.date,
 						time: this.state.time,
 					},
