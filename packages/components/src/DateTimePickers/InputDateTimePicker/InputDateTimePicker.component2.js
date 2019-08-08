@@ -4,6 +4,7 @@ import uuid from 'uuid';
 
 import DateTime from '../DateTime';
 import InputDatePicker from '../InputDatePicker';
+import InputTimePicker from '../InputTimePicker';
 
 
 class InputDateTimePicker extends React.Component {
@@ -66,6 +67,7 @@ class InputDateTimePicker extends React.Component {
 				onChange={this.onChange}
 			>
 				<InputDatePicker {...this.props} />
+				<InputTimePicker {...this.props} />
 			</DateTime.Manager>
 		);
 	}

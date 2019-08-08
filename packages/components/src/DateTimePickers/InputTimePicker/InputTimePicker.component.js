@@ -11,7 +11,7 @@ import { DateTimeContext } from '../DateTime/Context';
 import DateTime from '../DateTime';
 import { focusOnCalendar } from '../../Gesture/withCalendarGesture';
 
-import theme from './InputDatePicker.scss';
+import theme from './InputTimePicker.scss';
 
 const PROPS_TO_OMIT_FOR_INPUT = [
 	'dateFormat',
@@ -56,7 +56,7 @@ class InputDatePicker extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.popoverId = `date-picker-${props.id || uuid.v4()}`;
+		this.popoverId = `input-time-picker-${props.id || uuid.v4()}`;
 		this.state = {
 			showPicker: false,
 		};
@@ -117,8 +117,8 @@ class InputDatePicker extends React.Component {
 			this.props.formMode ||
 			(!this.props.formMode && payload.origin !== 'INPUT')
 		) {
-			this.inputRef.focus();
-			this.closePicker({ picked: true });
+			// this.inputRef.focus();
+			// this.closePicker({ picked: true });
 		}
 	}
 
@@ -151,10 +151,10 @@ class InputDatePicker extends React.Component {
 
 	render() {
 		const inputProps = omit(this.props, PROPS_TO_OMIT_FOR_INPUT);
-		const datePicker = [
+		const timePicker = [
 			<DateTime.Input
 				{...inputProps}
-				id={`${this.props.id}-date-input`}
+				id={`${this.props.id}-time-input`}
 				key="input"
 				inputRef={ref => {
 					this.inputRef = ref;
@@ -177,7 +177,9 @@ class InputDatePicker extends React.Component {
 				>
 					{({ ref, style }) => (
 						<div id={this.popoverId} className={theme.popper} style={style} ref={ref}>
-							<DateTime.DatePicker />
+							<ul>
+                                <li>hello world</li>
+                            </ul>
 							{this.props.formMode && <DateTime.Validation />}
 						</div>
 					)}
@@ -203,10 +205,10 @@ class InputDatePicker extends React.Component {
 					>
 						{this.props.formMode ? (
 							<form key="form" onSubmit={formManagement.onSubmit}>
-								{datePicker}
+								{timePicker}
 							</form>
 						) : (
-								datePicker
+								timePicker
 						)}
 					</FocusManager>
 				)}

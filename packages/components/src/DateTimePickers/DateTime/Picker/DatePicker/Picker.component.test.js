@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { DateTimeContext } from '../Context';
+import { DateTimeContext } from '../../Context';
 import Picker from './Picker.component';
 
 describe('DateTime.Picker', () => {

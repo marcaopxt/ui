@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 
-import { DateTimeContext } from '../Context';
-import DateTimePicker from '../../pickers/DateTimePicker';
+import { DateTimeContext } from '../../Context';
+import DateTimePicker from '../../../pickers/DateTimePicker';
 
-export default function Picker(props) {
+export default function DatePicker(props) {
 	const { datetime, pickerManagement } = useContext(DateTimeContext);
 	return (
 		<DateTimePicker
@@ -17,4 +17,4 @@ export default function Picker(props) {
 		/>
 	);
 }
-Picker.displayName = 'DateTime.Picker';
+DatePicker.displayName = 'DateTime.DatePicker';

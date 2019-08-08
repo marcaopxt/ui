@@ -1,3 +1,5 @@
-import ContextualPicker from './Picker.component';
+import DatePicker from './DatePicker/Picker.component';
 
-export default ContextualPicker;
+export default {
+	DatePicker,
+};
