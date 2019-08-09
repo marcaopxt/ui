@@ -13,6 +13,7 @@ export default function Input(props) {
 		errorManagement,
 	} = useContext(DateTimeContext);
 	const partInputManagement = props.part === 'date' ? dateInputManagement : timeInputManagement;
+	const value = props.part === 'date' ? datetime.dateTextInput : datetime.timeTextInput;
 
 	return (
 		<DebounceInput
@@ -22,7 +23,7 @@ export default function Input(props) {
 			debounceTimeout={300}
 			onFocus={errorManagement.onInputFocus}
 			type="text"
-			value={datetime.textInput}
+			value={value}
 			{...inputManagement}
 			{...partInputManagement}
 			{...props}

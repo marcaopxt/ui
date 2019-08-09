@@ -160,8 +160,7 @@ class InputTimePicker extends React.Component {
 				inputRef={ref => {
 					this.inputRef = ref;
 				}}
-				placeholder="HH:mm"
-				inputType="time"
+				part="time"
 			/>,
 			this.state.showPicker && (
 				<Popper

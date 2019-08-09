@@ -359,12 +359,12 @@ function strToTime(strToParse, useSeconds) {
  * If a part is not used, it is init to 00, otherwise it's empty, so user have to enter it.
  */
 function initTime({ useTime, useSeconds }) {
-	if (!useTime) {
-		return { hours: '00', minutes: '00', seconds: '00' };
-	} else if (!useSeconds) {
-		return { hours: '', minutes: '', seconds: '00' };
-	}
-	return { hours: '', minutes: '', seconds: '' };
+	// if (!useTime) {
+	// 	return { hours: '00', minutes: '00', seconds: '00' };
+	// } else if (!useSeconds) {
+	// 	return { hours: '', minutes: '', seconds: '00' };
+	// }
+	return { hours: '00', minutes: '00', seconds: '00' };
 }
 
 /**
@@ -448,7 +448,7 @@ function extractPartsFromDateAndTime(date, time, options) {
 	let errors = [];
 	let timeToUse = time;
 
-	if (options.useTime) {
+	if (options.useTime && time) {
 		try {
 			checkTime(time);
 		} catch (error) {
@@ -458,11 +458,15 @@ function extractPartsFromDateAndTime(date, time, options) {
 		timeToUse = initTime(options);
 	}
 
+	const datetime = dateAndTimeToDateTime(date, timeToUse, options);
+
 	return {
 		date,
 		time: timeToUse,
 		textInput: dateTimeToStr(date, timeToUse, options),
-		datetime: dateAndTimeToDateTime(date, timeToUse, options),
+		dateTextInput: format(datetime, extractFormatByPart(options, 'date')),
+		timeTextInput: format(datetime, extractFormatByPart(options, 'time')),
+		datetime,
 		errorMessage: errors[0] ? errors[0].message : null,
 		errors,
 	};
