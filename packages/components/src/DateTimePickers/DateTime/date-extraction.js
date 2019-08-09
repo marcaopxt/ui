@@ -464,8 +464,8 @@ function extractPartsFromDateAndTime(date, time, options) {
 		date,
 		time: timeToUse,
 		textInput: dateTimeToStr(date, timeToUse, options),
-		dateTextInput: format(datetime, extractFormatByPart(options, 'date')),
-		timeTextInput: format(datetime, extractFormatByPart(options, 'time')),
+		dateTextInput: format(datetime, options.dateFormat),
+		timeTextInput: format(datetime, getTimeFormat(options.useSeconds)),
 		datetime,
 		errorMessage: errors[0] ? errors[0].message : null,
 		errors,
@@ -474,35 +474,38 @@ function extractPartsFromDateAndTime(date, time, options) {
 
 /**
  * Extract parts (date, time, date/time, textInput) from a string
- * @param textInput {string}
+ * @param dateTextInput {string}
+ * @param timeTextInput {string}
  * @param options {Object}
  * @returns
  *	{{
  *		date: Date,
  *		time: { hours: string, minutes: string, seconds: string },
  *		datetime: Date,
- *		textInput: string
+ *		dateTextInput: string
+ *      timeTextInput: string
  * 	}}
  */
-function extractPartsFromTextInput(textInput, options) {
+function extractPartsFromTextInput(dateTextInput, timeTextInput, options) {
 	let time = initTime(options);
-	if (textInput === '') {
+	if (dateTextInput === '') {
 		return {
 			date: undefined,
 			time,
 			datetime: undefined,
-			textInput,
+			dateTextInput,
+			timeTextInput,
 			errors: [],
 		};
 	}
 
 	let date;
 	let errors = [];
-	let dateTextToParse = textInput;
+	let dateTextToParse = `${dateTextInput} ${timeTextInput}`;
 
 	try {
-		if (options.useTime) {
-			const splitMatches = textInput.match(splitDateAndTimePartsRegex) || [];
+		if (options.useTime && timeTextInput) {
+			const splitMatches = dateTextToParse.match(splitDateAndTimePartsRegex) || [];
 			if (!splitMatches.length) {
 				throw new DatePickerException('DATETIME_INVALID_FORMAT', 'DATETIME_INVALID_FORMAT');
 			} else {
@@ -530,11 +533,14 @@ function extractPartsFromTextInput(textInput, options) {
 		errors = [error];
 	}
 
+	const datetime = dateAndTimeToDateTime(date, time, options);
+
 	return {
 		date,
 		time,
-		datetime: dateAndTimeToDateTime(date, time, options),
-		textInput,
+		datetime,
+		dateTextInput,
+		timeTextInput,
 		errors,
 		errorMessage: errors[0] ? errors[0].message : null,
 	};
@@ -586,4 +592,5 @@ export {
 	extractPartsFromTextInput,
 	getFullDateFormat,
 	getTimeFormat,
+	strToTime,
 };

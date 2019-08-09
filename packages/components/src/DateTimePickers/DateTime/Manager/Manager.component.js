@@ -72,6 +72,8 @@ class ContextualManager extends React.Component {
 		this.onReset = this.onReset.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		this.onInputChange = this.onInputChange.bind(this);
+		this.onDateInputChange = this.onDateInputChange.bind(this);
+		this.onTimeInputChange = this.onTimeInputChange.bind(this);
 		this.onPickerChange = this.onPickerChange.bind(this);
 	}
 
@@ -103,9 +105,9 @@ class ContextualManager extends React.Component {
 		this.props.onChange(event, { errors, errorMessage, datetime, textInput, origin });
 	}
 
-	onInputChange(event) {
-		const textInput = event.target.value;
-		const nextState = extractPartsFromTextInput(textInput, this.getDateOptions());
+	onInputChange(event, dateTextInput, timeTextInput) {
+		const nextState =
+			extractPartsFromTextInput(dateTextInput, timeTextInput, this.getDateOptions());
 		this.setState({ previousErrors: this.state.errors, ...nextState }, () => {
 			if (!this.props.formMode) {
 				this.onChange(event, 'INPUT');
@@ -113,9 +115,16 @@ class ContextualManager extends React.Component {
 		});
 	}
 
-	onDateInputChange() {
-		
+	onDateInputChange(event) {
+		const dateTextInput = event.target.value;
+		const { timeTextInput } = this.state;
+		this.onInputChange(event, dateTextInput, timeTextInput);
+	}
 
+	onTimeInputChange(event) {
+		const timeTextInput = event.target.value;
+		const { dateTextInput } = this.state;
+		this.onInputChange(event, dateTextInput, timeTextInput);
 	}
 
 	onPickerChange(event, { date, time, field }) {
@@ -246,15 +255,17 @@ class ContextualManager extends React.Component {
 						inputRef: ref => {
 							this.inputRef = ref;
 						},
-						onChange: this.onInputChange,
+						// onChange: this.onInputChange,
 					},
 
 					dateInputManagement: {
 						placeholder: this.props.dateFormat,
+						onChange: this.onDateInputChange,
 					},
 
 					timeInputManagement: {
 						placeholder: getTimeFormat(this.props.useSeconds),
+						onChange: this.onTimeInputChange,
 					},
 
 					pickerManagement: {

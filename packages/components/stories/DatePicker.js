@@ -4,7 +4,8 @@ import { action } from '@storybook/addon-actions';
 import { IconsProvider } from '../src/index';
 
 import InputDateTimePicker, { DateTime } from '../src/DateTimePickers';
-import InputDateTimePicker2 from '../src/DateTimePickers/InputDateTimePicker/InputDateTimePicker.component2';
+import InputDateTimePicker3 from '../src/DateTimePickers/InputDateTimePicker/InputDateTimePicker.component3';
+
 
 class TestPickerWrapper extends React.Component {
 	static propTypes = {
@@ -59,13 +60,12 @@ class TestPickerWrapper extends React.Component {
 					</button>
 				</div>
 				<br />
-				<InputDateTimePicker2
+				<InputDateTimePicker3
 					{...this.props}
 					selectedDateTime={this.state.selectedDateTime}
 					onChange={action('onChange')}
 					onBlur={action('onBlur')}
 					name="Datetime"
-					useTime
 				/>
 			</form>
 		);
@@ -97,7 +97,7 @@ storiesOf('DatePicker', module)
 />
 			`}</pre>
 			<form style={{ width: 320 }}>
-				<InputDateTimePicker2
+				<InputDateTimePicker3
 					id="my-date-picker"
 					name="Datetime"
 					onBlur={action('onBlur')}
