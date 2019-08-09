@@ -424,16 +424,20 @@ function extractPartsFromDateTime(datetime, options) {
 }
 
 /**
- * extract date/time part from datetimeformat
- * @param {string} datetimeFormat
- * @param {string} type
+ * extract date/time part from dateFormat
+ * @param {string} dateFormat
+ * @param {string} part
  */
-function extractPartsFromDateTimeFormat(datetimeFormat, type) {
-	const formats = datetimeFormat.split(' ');
-	if (type === 'date') {
-		return formats[0];
-	} else if (formats.length === 2) {
-		return formats[1];
+function extractFormatByPart({ dateFormat, useTime, useSeconds }, part = 'date') {
+	const formatParts = dateFormat
+		.split(/\s/g) // split from blank
+		.filter(formatPart => formatPart); // remove empty elements
+
+	if (part === 'date') {
+		return formatParts[0] || '';
+	}
+	if (useTime) {
+		return useSeconds ? 'HH:mm:ss' : 'HH:mm';
 	}
 	return '';
 }
@@ -583,9 +587,9 @@ export {
 	checkMinutes,
 	checkSeconds,
 	checkSupportedDateFormat,
+	extractFormatByPart,
 	extractParts,
 	extractPartsFromDateTime,
-	extractPartsFromDateTimeFormat,
 	extractPartsFromDateAndTime,
 	extractPartsFromTextInput,
 	getFullDateFormat,

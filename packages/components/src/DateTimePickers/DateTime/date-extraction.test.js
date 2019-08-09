@@ -1,9 +1,9 @@
 import {
 	checkSupportedDateFormat,
+	extractFormatByPart,
 	extractParts,
 	extractPartsFromDateAndTime,
 	extractPartsFromDateTime,
-	extractPartsFromDateTimeFormat,
 	extractPartsFromTextInput,
 	getFullDateFormat,
 	check,
@@ -122,36 +122,6 @@ describe('Date extraction', () => {
 				errorMessage: null,
 				time: { hours: '00', minutes: '00', seconds: '00' },
 			});
-		});
-	});
-
-	describe('extractPartsFromDateTimeFormat', () => {
-		it('should extract date part from format string', () => {
-			// given
-			const type = 'date';
-			const datetimeFormat = 'YYYY/MM/DD HH:mm';
-			// when
-			const dateFormat = extractPartsFromDateTimeFormat(datetimeFormat, type);
-			// then
-			expect(dateFormat).toEqual('YYYY/MM/DD');
-		});
-		it('should extract time part from format string', () => {
-			// given
-			const type = 'time';
-			const datetimeFormat = 'YYYY/MM/DD HH:mm:ss';
-			// when
-			const timeFormat = extractPartsFromDateTimeFormat(datetimeFormat, type);
-			// then
-			expect(timeFormat).toEqual('HH:mm:ss');
-		});
-		it('should return date format string for date format', () => {
-			// given
-			const type = 'date';
-			const datetimeFormat = 'YYYY/MM/DD';
-			// when
-			const dateFormat = extractPartsFromDateTimeFormat(datetimeFormat, type);
-			// then
-			expect(dateFormat).toEqual('YYYY/MM/DD');
 		});
 	});
 
