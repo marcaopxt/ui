@@ -1,0 +1,8 @@
+.tf-buttons {
+	display: flex;
+	align-items: center;
+
+	*:global(.right) {
+		margin-left: auto;
+	}
+}

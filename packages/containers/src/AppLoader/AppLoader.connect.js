@@ -18,8 +18,11 @@ const CustomInject = cmfConnect({
  * @param {boolean} props.loading tell if the app loader should show the loader or the content
  * @param {object} props.children react element to show
  */
-export function AppLoaderContainer({ loading, children, ...rest }) {
+export function AppLoaderContainer({ loading, children, loader, ...rest }) {
 	if (loading) {
+		if (loader) {
+			return loader(<AppLoader {...rest} />);
+		}
 		return <AppLoader {...rest} />;
 	}
 
