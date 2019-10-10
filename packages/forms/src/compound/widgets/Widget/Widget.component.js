@@ -13,7 +13,6 @@ const widgetDictionary = {
 
 export default function Widget({ id, schema }) {
 	const { properties } = useContext(formContext);
-
 	const WidgetComponent = widgetDictionary[schema.widget || schema.type];
 	const value = getValue(properties, schema);
 	const widgetId = sfPath.name(schema.key, '_', id);
