@@ -1,27 +1,31 @@
 import omit from 'lodash/omit';
 import get from 'lodash/get';
 import invariant from 'invariant';
+import { LOADING_STEP_STATUSES, initialState } from '../Stepper.constants';
+
+import { getStepperKey, isStepsLoading } from './Stepper.utils';
 import {
-	LOADING_STEP_STATUSES,
-	initialState,
 	LOADING_STEPS_INIT,
 	LOADING_STEPS_REMOVE,
 	LOADING_STEPS_PROCEED_EVENT,
-} from '../Stepper.constants';
-import { getStepperKey, isStepsLoading } from './Stepper.utils';
+	StepperActionTypes,
+	ProceedLoadingEventAction,
+	StepperState,
+} from './Stepper.service.types';
+import { Step } from '../Stepper.types';
 
-const isInStepAttribute = (stepAttribute, value) =>
+const isInStepAttribute = (stepAttribute: string | string[], value: string) =>
 	(typeof stepAttribute === 'string' && stepAttribute === value) ||
 	(Array.isArray(stepAttribute) && stepAttribute.includes(value));
 
-const checkAttribute = attributeName => (step, event) =>
+const checkAttribute = (attributeName: keyof Step) => (step: Step, event: string) =>
 	isInStepAttribute(step[attributeName], event);
 
 const isEventTriggerFail = checkAttribute('failureOn');
 const isEventTriggerSuccess = checkAttribute('successOn');
 const isEventTriggerLoading = checkAttribute('loadingOn');
 
-function mapStepWithNoError(step, action) {
+function mapStepWithNoError(step: Step, action: ProceedLoadingEventAction) {
 	if (isEventTriggerSuccess(step, action.event)) {
 		return {
 			...step,
@@ -37,7 +41,7 @@ function mapStepWithNoError(step, action) {
 	return step;
 }
 
-function getNewStepsWithError(steps, action) {
+function getNewStepsWithError(steps: Step[], action: ProceedLoadingEventAction) {
 	let errorHandled = false;
 	return steps.map(step => {
 		if (step.status !== LOADING_STEP_STATUSES.SUCCESS) {
@@ -58,18 +62,18 @@ function getNewStepsWithError(steps, action) {
 	});
 }
 
-const hasAttribute = (step, attribute) =>
+const hasAttribute = (step: Step, attribute: keyof Step) =>
 	step[attribute] || (Array.isArray(step[attribute]) && step[attribute].length > 0);
 
-const hasStepFailure = step => hasAttribute(step, 'failureOn');
-const hasStepSuccess = step => hasAttribute(step, 'successOn');
-const hasStepLoading = step => hasAttribute(step, 'loadingOn');
+const hasStepFailure = (step: Step) => hasAttribute(step, 'failureOn');
+const hasStepSuccess = (step: Step) => hasAttribute(step, 'successOn');
+const hasStepLoading = (step: Step) => hasAttribute(step, 'loadingOn');
 
 /**
  * This function check & mutate the steps
- * @param {array} steps the loading steps
+ * @param steps the loading steps
  */
-function checkSteps(steps) {
+function checkSteps(steps: Step[]) {
 	return steps.map(step => {
 		if (!hasStepFailure(step)) {
 			invariant(
@@ -98,13 +102,13 @@ function checkSteps(steps) {
 
 /**
  * This function change the status of the steps in order to reflect the event
- * @param {object} state redux state
- * @param {object} action the redux action
+ * @param state redux state
+ * @param action the redux action
  */
-function handleEvent(state, action) {
+function handleEvent(state: StepperState, action: ProceedLoadingEventAction) {
 	const loadingKey = getStepperKey(action);
 	const loadingResource = get(state, [loadingKey], {});
-	const steps = get(loadingResource, 'steps', []);
+	const steps: Step[] = get(loadingResource, 'steps', []);
 	if (!isStepsLoading(steps)) {
 		return state;
 	}
@@ -125,10 +129,13 @@ function handleEvent(state, action) {
 /**
  * This function is a classic reducer
  * It handle the Loading Steps of a resource
- * @param {object} state Redux state
- * @param {object} action Redux Action
+ * @param state Redux state
+ * @param action Redux Action
  */
-export default function stepperReducer(state = initialState, action) {
+export default function stepperReducer(
+	state: StepperState = initialState,
+	action: StepperActionTypes,
+) {
 	switch (action.type) {
 		case LOADING_STEPS_INIT:
 			return { ...state, [getStepperKey(action)]: { steps: checkSteps(action.steps) } };
