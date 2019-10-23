@@ -2,10 +2,10 @@
 
 exports[`Stepper Component render should render when there is an errors in the steps 1`] = `
 <React.Fragment>
-  <StepperTransition
+  <Unknown
     active={true}
   />
-  <StepperTransition
+  <Unknown
     active={false}
   >
     <div
@@ -87,16 +87,16 @@ exports[`Stepper Component render should render when there is an errors in the s
         </ol>
       </div>
     </div>
-  </StepperTransition>
+  </Unknown>
 </React.Fragment>
 `;
 
 exports[`Stepper Component render should render when there is no errors in the steps 1`] = `
 <React.Fragment>
-  <StepperTransition
+  <Unknown
     active={false}
   />
-  <StepperTransition
+  <Unknown
     active={true}
   >
     <div
@@ -133,6 +133,8 @@ exports[`Stepper Component render should render when there is no errors in the s
             >
               <withI18nextTranslation(CircularProgress)
                 className="stepper-icon-loading theme-stepper-icon-loading stepper-icon theme-stepper-icon"
+                size="default"
+                t={[Function]}
               />
               Global Quality
             </div>
@@ -146,6 +148,8 @@ exports[`Stepper Component render should render when there is no errors in the s
             >
               <withI18nextTranslation(CircularProgress)
                 className="stepper-icon-loading theme-stepper-icon-loading stepper-icon theme-stepper-icon"
+                size="default"
+                t={[Function]}
               />
               Flattening
             </div>
@@ -168,6 +172,6 @@ exports[`Stepper Component render should render when there is no errors in the s
         </ol>
       </div>
     </div>
-  </StepperTransition>
+  </Unknown>
 </React.Fragment>
 `;

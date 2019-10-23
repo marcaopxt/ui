@@ -8,9 +8,9 @@
     "prepublish": "tsc && cpx -v \"./src/**/*.scss\" ./lib",
     "start": "start-storybook -p 6009",
     "test": "jest --silent",
-    "test:noisy": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
+    "test:noisy": "ts-jest",
+    "test:watch": "ts-jest --watch",
+    "test:cov": "ts-jest --coverage",
     "test:demo": "build-storybook",
     "lint:es": "eslint --config ../../.eslintrc src",
     "lint": "npm run lint:es",
@@ -47,6 +47,7 @@
     "@babel/preset-react": "^7.0.0",
     "@storybook/addon-a11y": "^5.2.3",
     "@storybook/addon-actions": "^5.2.3",
+    "@storybook/addon-info": "^5.2.5",
     "@storybook/addons": "^5.2.3",
     "@storybook/react": "^5.2.3",
     "@talend/icons": "^4.14.0-1",
@@ -55,18 +56,20 @@
     "@types/enzyme": "^3.9.1",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/invariant": "^2.2.29",
-    "@types/lodash": "^4.14.144",
     "@types/jest": "^24.0.11",
-    "@types/react": "^16.8.10",
-    "@types/react-transition-group": "^2.3.1",
-    "@types/react-redux": "^5.0.7",
+    "@types/lodash": "^4.14.144",
+    "@types/lodash-es": "^4.17.3",
     "@types/react-dom": "^16.8.3",
-    "@types/react-i18next": "^7.6.1",
+    "@types/react-i18next": "^8.1.0",
+    "@types/react-redux": "^5.0.7",
+    "@types/react-transition-group": "^2.3.1",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
     "@typescript-eslint/parser": "^1.6.0",
+    "awesome-typescript-loader": "^5.2.1",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.7.1",
     "babel-loader": "^8.0.0",
+    "babel-polyfill": "^6.26.0",
     "cpx": "^1.5.0",
     "css-loader": "^1.0.1",
     "enzyme": "^3.9.0",
@@ -83,6 +86,7 @@
     "node-sass": "^4.7.2",
     "prop-types": "^15.5.10",
     "react": "^16.8.6",
+    "react-docgen-typescript-loader": "^3.3.0",
     "react-dom": "^16.8.6",
     "react-i18next": "^10.11.4",
     "react-redux": "^5.0.7",
@@ -102,26 +106,6 @@
     "react-i18next": "^10.11.4",
     "react-redux": "^5.0.7",
     "react-transition-group": "^2.3.1"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}",
-      "!**/node_modules/**",
-      "!**/__snapshots__/**"
-    ],
-    "roots": [
-      "src"
-    ],
-    "testRegex": "src/.*\\.test\\.js$",
-    "moduleNameMapper": {
-      "^.+\\.(css|scss)$": "<rootDir>/test/styleMock.js"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/../../test-setup.js"
-    ],
-    "coveragePathIgnorePatterns": [
-      "index.js"
-    ]
   },
   "publishConfig": {
     "access": "public"

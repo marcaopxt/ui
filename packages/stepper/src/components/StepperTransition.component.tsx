@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Transition from 'react-transition-group/Transition';
+import React, { SFC } from 'react';
+import Transition, { ENTERED, EXITED, ENTERING } from 'react-transition-group/Transition';
 
 export const DEFAULT_TRANSITION_DURATION = 300;
 
@@ -13,13 +12,17 @@ const defaultStyle = {
 	width: '100%',
 };
 
-const transitionStyles = {
-	entering: { opacity: 0 },
-	entered: { opacity: 1 },
-	exited: { display: 'none' },
+const transitionStyles: { [key: string]: any } = {
+	[ENTERING]: { opacity: 0 },
+	[ENTERED]: { opacity: 1 },
+	[EXITED]: { display: 'none' },
 };
 
-export function StepperTransition({ children, active }) {
+type StepperTransitionProps = {
+	active: boolean;
+};
+
+export const StepperTransition: SFC<StepperTransitionProps> = ({ children, active }) => {
 	if (!children) {
 		return null;
 	}
@@ -38,9 +41,4 @@ export function StepperTransition({ children, active }) {
 			)}
 		</Transition>
 	);
-}
-
-StepperTransition.propTypes = {
-	children: PropTypes.element,
-	active: PropTypes.bool.isRequired,
 };

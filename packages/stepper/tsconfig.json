@@ -9,9 +9,13 @@
     "strict": true,
     "removeComments": true,
     "declaration": true,
+    "esModuleInterop": true,
     "jsx": "react"
   },
   "lib": ["ES2015.Iterable"],
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "src/**/*.test*"]
+  "exclude": ["node_modules", "src/**/*.test*"],
+  "paths": {
+    "lodash/*": ["node_modules/@types/lodash-es/*"]
+  }
 }

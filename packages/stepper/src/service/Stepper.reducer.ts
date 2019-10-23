@@ -14,12 +14,14 @@ import {
 } from './Stepper.service.types';
 import { Step } from '../Stepper.types';
 
-const isInStepAttribute = (stepAttribute: string | string[], value: string) =>
+const isInStepAttribute = (stepAttribute: string | string[] | undefined, value: string) =>
 	(typeof stepAttribute === 'string' && stepAttribute === value) ||
 	(Array.isArray(stepAttribute) && stepAttribute.includes(value));
 
-const checkAttribute = (attributeName: keyof Step) => (step: Step, event: string) =>
-	isInStepAttribute(step[attributeName], event);
+const checkAttribute = (attributeName: 'failureOn' | 'successOn' | 'loadingOn') => (
+	step: Step,
+	event: string,
+) => isInStepAttribute(step[attributeName], event);
 
 const isEventTriggerFail = checkAttribute('failureOn');
 const isEventTriggerSuccess = checkAttribute('successOn');
@@ -41,12 +43,13 @@ function mapStepWithNoError(step: Step, action: ProceedLoadingEventAction) {
 	return step;
 }
 
-function getNewStepsWithError(steps: Step[], action: ProceedLoadingEventAction) {
+function getNewStepsWithError(steps: Step[], action: ProceedLoadingEventAction): Step[] {
 	let errorHandled = false;
 	return steps.map(step => {
-		if (step.status !== LOADING_STEP_STATUSES.SUCCESS) {
+		if (step.status && step.status !== LOADING_STEP_STATUSES.SUCCESS) {
 			if (!errorHandled && isEventTriggerFail(step, action.event)) {
 				errorHandled = true;
+
 				return {
 					...step,
 					status: LOADING_STEP_STATUSES.FAILURE,
@@ -62,8 +65,12 @@ function getNewStepsWithError(steps: Step[], action: ProceedLoadingEventAction) 
 	});
 }
 
-const hasAttribute = (step: Step, attribute: keyof Step) =>
-	step[attribute] || (Array.isArray(step[attribute]) && step[attribute].length > 0);
+const hasAttribute = (step: Step, attribute: 'failureOn' | 'successOn' | 'loadingOn') => {
+	if (step[attribute] !== undefined) {
+		return (step[attribute] as String[]).length > 0;
+	}
+	return !!step[attribute];
+};
 
 const hasStepFailure = (step: Step) => hasAttribute(step, 'failureOn');
 const hasStepSuccess = (step: Step) => hasAttribute(step, 'successOn');
@@ -105,7 +112,7 @@ function checkSteps(steps: Step[]) {
  * @param state redux state
  * @param action the redux action
  */
-function handleEvent(state: StepperState, action: ProceedLoadingEventAction) {
+function handleEvent(state: StepperState, action: ProceedLoadingEventAction): StepperState {
 	const loadingKey = getStepperKey(action);
 	const loadingResource = get(state, [loadingKey], {});
 	const steps: Step[] = get(loadingResource, 'steps', []);
@@ -113,7 +120,7 @@ function handleEvent(state: StepperState, action: ProceedLoadingEventAction) {
 		return state;
 	}
 	const isErrorTriggered = !!steps.find(step => isInStepAttribute(step.failureOn, action.event));
-	let newSteps;
+	let newSteps: Step[];
 	if (isErrorTriggered) {
 		newSteps = getNewStepsWithError(steps, action);
 	} else {
@@ -135,7 +142,7 @@ function handleEvent(state: StepperState, action: ProceedLoadingEventAction) {
 export default function stepperReducer(
 	state: StepperState = initialState,
 	action: StepperActionTypes,
-) {
+): StepperState {
 	switch (action.type) {
 		case LOADING_STEPS_INIT:
 			return { ...state, [getStepperKey(action)]: { steps: checkSteps(action.steps) } };

@@ -3,23 +3,25 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import I18N_DOMAIN_STEPPER from '../../src/components/constant';
 
-i18n.use(initReactI18next).init({
-	lng: 'en',
-	resources: {
-		en: {
-			[I18N_DOMAIN_STEPPER]: {
-				ABORTED: ' (Aborted)',
+i18n.use(initReactI18next).init(
+	{
+		lng: 'en',
+		resources: {
+			en: {
+				[I18N_DOMAIN_STEPPER]: {
+					ABORTED: ' (Aborted)',
+				},
+			},
+			fr: {
+				[I18N_DOMAIN_STEPPER]: {
+					ABORTED: ' (Annulé)',
+				},
 			},
 		},
-		fr: {
-			[I18N_DOMAIN_STEPPER]: {
-				ABORTED: ' (Annulé)',
-			},
-		},
+		debug: false,
 	},
-	debug: false,
-	wait: true, // globally set to wait for loaded translations in translate hoc
-});
+	undefined,
+);
 
 export const LanguageSwitcher = () => {
 	const style = {
@@ -28,9 +30,9 @@ export const LanguageSwitcher = () => {
 		width: '100vw',
 		textAlign: 'center',
 		zIndex: 1,
-	};
+	} as React.CSSProperties;
 
-	function renderBtn(locale, isDefault) {
+	function renderBtn(locale: string, isDefault: boolean) {
 		return (
 			<button className="btn" onClick={() => i18n.changeLanguage(locale)}>
 				{locale} {isDefault && '(default)'}
@@ -42,7 +44,7 @@ export const LanguageSwitcher = () => {
 		<nav style={style}>
 			<div className="btn-group">
 				{renderBtn('en', true)}
-				{renderBtn('fr')}
+				{renderBtn('fr', false)}
 			</div>
 		</nav>
 	);

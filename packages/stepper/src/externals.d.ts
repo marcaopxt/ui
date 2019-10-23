@@ -1,2 +1,3 @@
 declare module '@talend/*';
-declare module 'i18next';
+declare module '*.scss';
+// declare module 'i18next';

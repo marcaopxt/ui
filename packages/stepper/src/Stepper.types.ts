@@ -4,9 +4,12 @@ export type StepHooks = string[] | string;
 
 export interface Step {
 	label: string;
-	message: string;
-	status: LOADING_STEP_STATUSES;
-	loadingOn: StepHooks;
+	message?: {
+		label: string;
+		description?: string;
+	};
+	status?: LOADING_STEP_STATUSES;
+	loadingOn?: StepHooks;
 	failureOn: StepHooks;
 	successOn: StepHooks;
 }

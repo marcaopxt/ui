@@ -1,6 +1,8 @@
 import { LOADING_STEP_STATUSES } from '../Stepper.constants';
 import { StepperActions } from '../index';
 import stepperReducer from './Stepper.reducer';
+import { Step } from '../Stepper.types';
+import { StepperState } from './Stepper.service.types';
 
 const DATASET_SAMPLE_EVENTS = {
 	SAMPLE_FETCHING_STARTED: 'SAMPLE_FETCHING_STARTED',
@@ -17,14 +19,14 @@ const DATASET_SAMPLE_EVENTS = {
 	SAMPLE_QUALITY_FAILURE: 'SAMPLE_QUALITY_FAILURE',
 };
 
-const steps = [
+const steps: Step[] = [
 	{
 		label: 'FIRST STEP',
 		status: LOADING_STEP_STATUSES.LOADING,
 		failureOn: [
 			DATASET_SAMPLE_EVENTS.FETCH_SAMPLE_ACCESS_FAILURE,
 			DATASET_SAMPLE_EVENTS.SAMPLE_FETCHING_FAILURE,
-			DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+			DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 		],
 		successOn: [
 			DATASET_SAMPLE_EVENTS.SAMPLE_FETCHED,
@@ -36,7 +38,7 @@ const steps = [
 		label: 'Update Sample',
 		failureOn: [
 			DATASET_SAMPLE_EVENTS.SAMPLE_UPDATE_FAILURE,
-			DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+			DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 		],
 		loadingOn: DATASET_SAMPLE_EVENTS.SAMPLE_FETCHED,
 		successOn: [
@@ -48,7 +50,7 @@ const steps = [
 		label: 'Update Quality',
 		failureOn: [
 			DATASET_SAMPLE_EVENTS.SAMPLE_QUALITY_FAILURE,
-			DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+			DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 		],
 		loadingOn: DATASET_SAMPLE_EVENTS.SAMPLE_UPDATED,
 		successOn: [DATASET_SAMPLE_EVENTS.SAMPLE_QUALITY_COMPUTED],
@@ -57,23 +59,6 @@ const steps = [
 
 describe('Stepper Service', () => {
 	describe('stepperReducer', () => {
-		describe('errors', () => {
-			it('should throw an error when there is no resourceId', () => {
-				// when
-				expect(() => StepperActions.initStepper('dataset')).toThrow(
-					Error('Stepper Reducer : resourceId should be present in the action'),
-				);
-			});
-
-			it('should throw an error when there is no resourceType', () => {
-				// given
-				// when
-				expect(() => StepperActions.initStepper(null, 'id12')).toThrow(
-					Error('Stepper Reducer : resourceType should be present in the action'),
-				);
-			});
-		});
-
 		it('should test INIT_LOADING_STEPS action', () => {
 			// given
 			const action = StepperActions.initStepper('dataset', 'id12', steps);
@@ -89,7 +74,7 @@ describe('Stepper Service', () => {
 							failureOn: [
 								DATASET_SAMPLE_EVENTS.FETCH_SAMPLE_ACCESS_FAILURE,
 								DATASET_SAMPLE_EVENTS.SAMPLE_FETCHING_FAILURE,
-								DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+								DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 							],
 							successOn: [
 								DATASET_SAMPLE_EVENTS.SAMPLE_FETCHED,
@@ -102,7 +87,7 @@ describe('Stepper Service', () => {
 							status: 'pending',
 							failureOn: [
 								DATASET_SAMPLE_EVENTS.SAMPLE_UPDATE_FAILURE,
-								DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+								DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 							],
 							loadingOn: DATASET_SAMPLE_EVENTS.SAMPLE_FETCHED,
 							successOn: [
@@ -115,7 +100,7 @@ describe('Stepper Service', () => {
 							status: 'pending',
 							failureOn: [
 								DATASET_SAMPLE_EVENTS.SAMPLE_QUALITY_FAILURE,
-								DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+								DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 							],
 							loadingOn: DATASET_SAMPLE_EVENTS.SAMPLE_UPDATED,
 							successOn: [DATASET_SAMPLE_EVENTS.SAMPLE_QUALITY_COMPUTED],
@@ -140,7 +125,7 @@ describe('Stepper Service', () => {
 		});
 
 		describe('should test LOADING_STEPS_PROCEED_EVENT action', () => {
-			let initState;
+			let initState: StepperState;
 			beforeEach(() => {
 				const initAction = StepperActions.initStepper('dataset', 'id12', steps);
 				initState = stepperReducer({}, initAction);
@@ -166,7 +151,7 @@ describe('Stepper Service', () => {
 								failureOn: [
 									DATASET_SAMPLE_EVENTS.FETCH_SAMPLE_ACCESS_FAILURE,
 									DATASET_SAMPLE_EVENTS.SAMPLE_FETCHING_FAILURE,
-									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 								],
 								message: {
 									label: 'You fail',
@@ -182,7 +167,7 @@ describe('Stepper Service', () => {
 								status: LOADING_STEP_STATUSES.ABORTED,
 								failureOn: [
 									DATASET_SAMPLE_EVENTS.SAMPLE_UPDATE_FAILURE,
-									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 								],
 								loadingOn: DATASET_SAMPLE_EVENTS.SAMPLE_FETCHED,
 								successOn: [
@@ -195,7 +180,7 @@ describe('Stepper Service', () => {
 								status: LOADING_STEP_STATUSES.ABORTED,
 								failureOn: [
 									DATASET_SAMPLE_EVENTS.SAMPLE_QUALITY_FAILURE,
-									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 								],
 								loadingOn: DATASET_SAMPLE_EVENTS.SAMPLE_UPDATED,
 								successOn: [DATASET_SAMPLE_EVENTS.SAMPLE_QUALITY_COMPUTED],
@@ -224,7 +209,7 @@ describe('Stepper Service', () => {
 								failureOn: [
 									DATASET_SAMPLE_EVENTS.FETCH_SAMPLE_ACCESS_FAILURE,
 									DATASET_SAMPLE_EVENTS.SAMPLE_FETCHING_FAILURE,
-									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 								],
 								successOn: [
 									DATASET_SAMPLE_EVENTS.SAMPLE_FETCHED,
@@ -237,7 +222,7 @@ describe('Stepper Service', () => {
 								status: LOADING_STEP_STATUSES.LOADING,
 								failureOn: [
 									DATASET_SAMPLE_EVENTS.SAMPLE_UPDATE_FAILURE,
-									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 								],
 								loadingOn: DATASET_SAMPLE_EVENTS.SAMPLE_FETCHED,
 								successOn: [
@@ -250,7 +235,7 @@ describe('Stepper Service', () => {
 								status: LOADING_STEP_STATUSES.PENDING,
 								failureOn: [
 									DATASET_SAMPLE_EVENTS.SAMPLE_QUALITY_FAILURE,
-									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 								],
 								loadingOn: DATASET_SAMPLE_EVENTS.SAMPLE_UPDATED,
 								successOn: [DATASET_SAMPLE_EVENTS.SAMPLE_QUALITY_COMPUTED],
@@ -285,7 +270,7 @@ describe('Stepper Service', () => {
 								failureOn: [
 									DATASET_SAMPLE_EVENTS.FETCH_SAMPLE_ACCESS_FAILURE,
 									DATASET_SAMPLE_EVENTS.SAMPLE_FETCHING_FAILURE,
-									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 								],
 								successOn: [
 									DATASET_SAMPLE_EVENTS.SAMPLE_FETCHED,
@@ -298,7 +283,7 @@ describe('Stepper Service', () => {
 								status: LOADING_STEP_STATUSES.SUCCESS,
 								failureOn: [
 									DATASET_SAMPLE_EVENTS.SAMPLE_UPDATE_FAILURE,
-									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 								],
 								loadingOn: DATASET_SAMPLE_EVENTS.SAMPLE_FETCHED,
 								successOn: [
@@ -311,7 +296,7 @@ describe('Stepper Service', () => {
 								status: LOADING_STEP_STATUSES.LOADING,
 								failureOn: [
 									DATASET_SAMPLE_EVENTS.SAMPLE_QUALITY_FAILURE,
-									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 								],
 								loadingOn: DATASET_SAMPLE_EVENTS.SAMPLE_UPDATED,
 								successOn: [DATASET_SAMPLE_EVENTS.SAMPLE_QUALITY_COMPUTED],
@@ -340,7 +325,7 @@ describe('Stepper Service', () => {
 								failureOn: [
 									DATASET_SAMPLE_EVENTS.FETCH_SAMPLE_ACCESS_FAILURE,
 									DATASET_SAMPLE_EVENTS.SAMPLE_FETCHING_FAILURE,
-									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 								],
 								successOn: [
 									DATASET_SAMPLE_EVENTS.SAMPLE_FETCHED,
@@ -353,7 +338,7 @@ describe('Stepper Service', () => {
 								status: LOADING_STEP_STATUSES.SUCCESS,
 								failureOn: [
 									DATASET_SAMPLE_EVENTS.SAMPLE_UPDATE_FAILURE,
-									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 								],
 								loadingOn: DATASET_SAMPLE_EVENTS.SAMPLE_FETCHED,
 								successOn: [
@@ -366,7 +351,7 @@ describe('Stepper Service', () => {
 								status: LOADING_STEP_STATUSES.SUCCESS,
 								failureOn: [
 									DATASET_SAMPLE_EVENTS.SAMPLE_QUALITY_FAILURE,
-									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESHED_FAILURE,
+									DATASET_SAMPLE_EVENTS.SAMPLE_REFRESH_FAILURE,
 								],
 								loadingOn: DATASET_SAMPLE_EVENTS.SAMPLE_UPDATED,
 								successOn: [DATASET_SAMPLE_EVENTS.SAMPLE_QUALITY_COMPUTED],

@@ -51,12 +51,20 @@ export function proceedLoadingEvent(
 	messageLabel?: string,
 ): ProceedLoadingEventAction {
 	checkResourceParameters(resourceType, resourceId);
+	if (messageLabel) {
+		return {
+			type: LOADING_STEPS_PROCEED_EVENT,
+			resourceType,
+			resourceId,
+			event,
+			message: { label: messageLabel },
+		};
+	}
 	return {
 		type: LOADING_STEPS_PROCEED_EVENT,
 		resourceType,
 		resourceId,
 		event,
-		message: { label: messageLabel },
 	};
 }
 

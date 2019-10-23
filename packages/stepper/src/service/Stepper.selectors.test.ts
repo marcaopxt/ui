@@ -1,19 +1,21 @@
 import { getStepsForResource, isResourceLoading } from './Stepper.selectors';
-import { LOADING_STEP_STATUSES } from '../Stepper.constants';
+import { LOADING_STEP_STATUSES, STATE_KEY } from '../Stepper.constants';
+import { StepperStore } from './Stepper.service.types';
+import { Step } from '../Stepper.types';
 
 const resourceType = 'foo';
 
 const resourceId = 'bar';
 
-const steps = [
-	{ label: 'Step A', status: LOADING_STEP_STATUSES.SUCCESS },
-	{ label: 'Step B', status: LOADING_STEP_STATUSES.SUCCESS },
-	{ label: 'Step C', status: LOADING_STEP_STATUSES.LOADING },
-	{ label: 'Step D', status: LOADING_STEP_STATUSES.PENDING },
+const steps: Step[] = [
+	{ label: 'Step A', status: LOADING_STEP_STATUSES.SUCCESS, failureOn: [], successOn: [] },
+	{ label: 'Step B', status: LOADING_STEP_STATUSES.SUCCESS, failureOn: [], successOn: [] },
+	{ label: 'Step C', status: LOADING_STEP_STATUSES.LOADING, failureOn: [], successOn: [] },
+	{ label: 'Step D', status: LOADING_STEP_STATUSES.PENDING, failureOn: [], successOn: [] },
 ];
 
-const store = {
-	stepper: {
+const store: StepperStore = {
+	[STATE_KEY]: {
 		[`${resourceType}-${resourceId}`]: {
 			steps,
 		},

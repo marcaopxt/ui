@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, SFC } from 'react';
 import Icon from '@talend/react-components/lib/Icon';
 import CircularProgress from '@talend/react-components/lib/CircularProgress';
-import { withTranslation } from 'react-i18next';
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { getTheme } from '@talend/react-components/lib/theme';
 
 import I18N_NAMESPACE from './constant';
@@ -10,22 +10,23 @@ import theme from './Stepper.component.scss';
 import { LOADING_STEP_STATUSES } from '../Stepper.constants';
 import { DEFAULT_TRANSITION_DURATION, StepperTransition } from './StepperTransition.component';
 import { isErrorInSteps, isStepsLoading, isAllSuccessful } from '../service/Stepper.utils';
-import getDefaultT from '../translate';
+import { Step } from '../Stepper.types';
 
 const getClass = getTheme(theme);
 
 const SHOW_COMPLETED_TRANSITION_TIMER = 1000;
-export const TRANSITION_STATE = {
-	STEPS: 'STEPS',
-	TRANSITION: 'TRANSITION',
-	CHILD: 'CHILD',
-};
+export enum TRANSITION_STATE {
+	STEPS = 'STEPS',
+	TRANSITION = 'TRANSITION',
+	CHILD = 'CHILD',
+}
+type TransitionStateSetter = React.Dispatch<React.SetStateAction<TRANSITION_STATE>>;
 
 /**
  * This function returns a label for some status
  * @param {string} status the current step status
  */
-function getStatusText(t, status) {
+function getStatusText(t: i18next.TFunction, status: LOADING_STEP_STATUSES | undefined) {
 	switch (status) {
 		case LOADING_STEP_STATUSES.ABORTED:
 			return t('ABORTED', { defaultValue: ' (Aborted)' });
@@ -40,7 +41,7 @@ function getStatusText(t, status) {
  * This function returns an icon that represent the current step
  * @param {string} status the current step status
  */
-function getIconByStatus(status) {
+function getIconByStatus(status: LOADING_STEP_STATUSES | undefined) {
 	const iconCLass = getClass(`stepper-icon-${status}`, 'stepper-icon');
 	switch (status) {
 		case LOADING_STEP_STATUSES.SUCCESS:
@@ -58,7 +59,11 @@ function getIconByStatus(status) {
 	}
 }
 
-function changeTransitionState(newTransitionState, setTransitionState, timer = 0) {
+function changeTransitionState(
+	newTransitionState: TRANSITION_STATE,
+	setTransitionState: TransitionStateSetter,
+	timer = 0,
+) {
 	if (timer === 0) {
 		setTransitionState(newTransitionState);
 	} else {
@@ -73,12 +78,13 @@ function changeTransitionState(newTransitionState, setTransitionState, timer = 0
  * @param {object} step the current loading step
  * @param {number} index the index for the key
  */
-function showStep(t, step, index, steps) {
+function showStep(t: i18next.TFunction, step: Step, index: number, steps: Step[]) {
 	const cssStep = getClass('stepper-step', `stepper-step-${step.status}`);
 
-	const a11y = {};
+	const a11y: any = {};
 	if (
-		[LOADING_STEP_STATUSES.LOADING, LOADING_STEP_STATUSES.FAILURE].includes(step.status) ||
+		(!!step.status &&
+			[LOADING_STEP_STATUSES.LOADING, LOADING_STEP_STATUSES.FAILURE].includes(step.status)) ||
 		(index === steps.length - 1 && step.status === LOADING_STEP_STATUSES.SUCCESS)
 	) {
 		a11y['aria-current'] = true;
@@ -107,8 +113,9 @@ function showStep(t, step, index, steps) {
  * @param {string} transition the transition state to set
  * @param {number} timer the timer to set the transition
  */
-function transition(transitionState, timer = 0) {
-	return setTransitionState => changeTransitionState(transitionState, setTransitionState, timer);
+function transition(transitionState: TRANSITION_STATE, timer = 0) {
+	return (setTransitionState: TransitionStateSetter) =>
+		changeTransitionState(transitionState, setTransitionState, timer);
 }
 
 const transitionLoadingToEmpty = transition(
@@ -122,7 +129,14 @@ const transitionEmptyToChildren = transition(
 const transitionChildrenToEmpty = transition(TRANSITION_STATE.TRANSITION);
 const transitionEmptyToLoading = transition(TRANSITION_STATE.STEPS, DEFAULT_TRANSITION_DURATION);
 
-export function Stepper({ steps, title, renderActions, children, t }) {
+type StepperProps = {
+	steps: Step[];
+	title: string;
+	renderActions?: (isInError: boolean) => React.ReactNode;
+};
+
+export const Stepper: SFC<StepperProps> = ({ steps, title, renderActions, children }) => {
+	const { t } = useTranslation(I18N_NAMESPACE);
 	const isInError = isErrorInSteps(steps);
 	const [transitionState, setTransitionState] = useState(
 		isStepsLoading(steps) ? TRANSITION_STATE.STEPS : TRANSITION_STATE.CHILD,
@@ -146,7 +160,7 @@ export function Stepper({ steps, title, renderActions, children, t }) {
 	return (
 		<React.Fragment>
 			<StepperTransition active={transitionState === TRANSITION_STATE.CHILD}>
-				{children}
+				{children as any}
 			</StepperTransition>
 			<StepperTransition active={transitionState === TRANSITION_STATE.STEPS}>
 				<div className={getClass('stepper')}>
@@ -167,30 +181,9 @@ export function Stepper({ steps, title, renderActions, children, t }) {
 			</StepperTransition>
 		</React.Fragment>
 	);
-}
+};
 
 Stepper.displayName = 'Stepper';
-
 Stepper.defaultProps = {
 	steps: [],
-	t: getDefaultT(),
 };
-
-Stepper.propTypes = {
-	t: PropTypes.func,
-	title: PropTypes.string,
-	renderActions: PropTypes.func,
-	children: PropTypes.element.isRequired,
-	steps: PropTypes.arrayOf(
-		PropTypes.shape({
-			label: PropTypes.string,
-			status: PropTypes.oneOf(Object.values(LOADING_STEP_STATUSES)),
-			message: PropTypes.shape({
-				label: PropTypes.string,
-				description: PropTypes.string,
-			}),
-		}),
-	),
-};
-
-export default withTranslation(I18N_NAMESPACE)(Stepper);
