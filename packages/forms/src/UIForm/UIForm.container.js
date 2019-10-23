@@ -205,43 +205,7 @@ export default class UIForm extends React.Component {
 if (process.env.NODE_ENV !== 'production') {
 	UIForm.propTypes = {
 		...formPropTypes,
-		/**
-		 * if initial data is present set initial state with it
-		 * if not use juste data
-		 * if initial data update
-		 * update initialData and liveData with it
-		 */
-		initialData: PropTypes.shape({
-			/** Json schema that specify the data model */
-			jsonSchema: PropTypes.object,
-			/** UI schema that specify how to render the fields */
-			uiSchema: PropTypes.array,
-			/**
-			 * Form fields values.
-			 * Note that it should contains @definitionName for triggers.
-			 */
-			properties: PropTypes.object,
-			/**
-			 * Form fields errors.
-			 */
-			errors: PropTypes.object,
-		}),
-		/** Form schema configuration */
-		data: PropTypes.shape({
-			/** Json schema that specify the data model */
-			jsonSchema: PropTypes.object,
-			/** UI schema that specify how to render the fields */
-			uiSchema: PropTypes.array,
-			/**
-			 * Form fields values.
-			 * Note that it should contains @definitionName for triggers.
-			 */
-			properties: PropTypes.object,
-			/**
-			 * Form fields errors.
-			 */
-			errors: PropTypes.object,
-		}),
+
 		/**
 		 * Actions buttons to display at the bottom of the form.
 		 * If not provided, a single submit button is displayed.

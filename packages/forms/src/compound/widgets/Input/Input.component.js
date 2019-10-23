@@ -5,6 +5,7 @@ import formContext from '../../context';
 import { generateDescriptionId, generateErrorId } from '../../../UIForm/Message/generateId';
 import FieldTemplate from '../../../UIForm/fields/FieldTemplate';
 import { convertValue } from '../../../UIForm/utils/properties';
+import schemaBuilder from '../../schema/schema-builder';
 
 function Input(props) {
 	const {
@@ -61,8 +62,22 @@ function Input(props) {
 }
 
 function ContextualInput({ schema = {}, ...props }) {
-	const { onChange, onFinish, properties } = useContext(formContext);
+	const { onChange, onValidate, properties } = useContext(formContext);
 	const innerSchema = schema.schema || {};
+
+	const getSchema = () => {
+		if (schema) {
+			return schema;
+		}
+
+		return (
+			schemaBuilder()
+				// .setKey('firstname')
+				// .setRequired()
+				.build()
+		);
+	};
+
 	return (
 		<Input
 			autoFocus={schema.autoFocus}
@@ -74,7 +89,7 @@ function ContextualInput({ schema = {}, ...props }) {
 			required={schema.required}
 			type={schema.type}
 			onChange={(event, value) => onChange(event, { schema, value })}
-			onBlur={(event, value) => onFinish(event, { schema, value })}
+			onBlur={(event, value) => onValidate(event, { schema, value })}
 			value={get(properties, schema.key) || ''}
 			// number specific
 			min={innerSchema.minimum}

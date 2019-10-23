@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import formContext from './context';
-import { mutateValue } from '../UIForm/utils/properties';
+import formContext from '../UIForm/context';
+import { getValue, mutateValue } from '../UIForm/utils/properties';
+import { validateSingle } from '../UIForm/utils/validation';
+import { removeError, addError } from '../UIForm/utils/errors';
+
 import theme from './Form.scss';
 
 function useUIFormProperties(initialProperties, callback) {
@@ -26,6 +29,7 @@ function useUIFormProperties(initialProperties, callback) {
 
 export default function Form({ children, onChange, onSubmit, initialProperties = {}, ...rest }) {
 	const [properties, onFormChange] = useUIFormProperties(initialProperties, onChange);
+	const [errors, setErrors] = useState({});
 
 	const onFormSubmit = event => {
 		if (!onSubmit) {
@@ -35,12 +39,28 @@ export default function Form({ children, onChange, onSubmit, initialProperties =
 		onSubmit(event, properties);
 	};
 
+	const onFormValidation = (event, { schema, value }) => {
+		// get property value
+		let newValue;
+		if (value !== undefined) {
+			newValue = value;
+		} else {
+			newValue = getValue(this.props.properties, schema);
+		}
+
+		const widgetErrors = validateSingle(schema, newValue, properties);
+		const newErrors = Object.entries(widgetErrors).reduce((accu, [errorKey, errorValue]) => {
+			const errorSchema = { key: errorKey };
+			return errorValue ? addError(accu, errorSchema, errorValue) : removeError(accu, errorSchema);
+		}, errors);
+		setErrors(newErrors);
+	};
+
 	const contextValue = {
 		onChange: onFormChange,
-		onFinish(...args) {
-			console.log('Finish', args);
-		},
+		onValidate: onFormValidation,
 		properties,
+		errors,
 	};
 
 	return (

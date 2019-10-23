@@ -7,9 +7,13 @@ import Input from '../src/compound/widgets/Input';
 
 storiesOf('Compound/default', module)
 	.add('compound', () => (
-		<Form onSubmit={action('submit')} onChange={action('change')} initialProperties={{ age: 12 }}>
-			<Input schema={{ key: ['firstname'] }} type="text" label="First name" required />
-			<Input schema={{ key: ['lastname'] }} type="text" label="Last name" required />
+		<Form
+			onSubmit={action('submit')}
+			onChange={action('change')}
+			initialProperties={{ user: { firstname: 'romain' }, age: 12 }}
+		>
+			<Input name="user.firstname" type="text" label="First name" required />
+			<Input schema={{ key: ['user', 'lastname'] }} type="text" label="Last name" onValidate= required />
 			<Input schema={{ key: ['age'] }} type="number" label="Age" />
 			<Input schema={{ key: ['email'] }} type="email" label="Email" required />
 			<Form.Buttons>
