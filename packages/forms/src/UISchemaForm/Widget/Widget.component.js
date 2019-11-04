@@ -3,10 +3,10 @@ import React from 'react';
 import { sfPath } from '@talend/json-schema-form-core';
 import TooltipTrigger from '@talend/react-components/lib/TooltipTrigger';
 
-import defaultWidgets from '../utils/widgets';
-import { getError } from '../utils/errors';
-import { getValue } from '../utils/properties';
-import shouldRender from '../utils/condition';
+import defaultWidgets from '../../UIForm/utils/widgets';
+import { getError } from '../../UIForm/utils/errors';
+import { getValue } from '../../UIForm/utils/properties';
+import shouldRender from '../../UIForm/utils/condition';
 
 import theme from './Widget.component.scss';
 

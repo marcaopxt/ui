@@ -8,7 +8,7 @@ import i18n from '../stories/config/i18n';
 
 function loadStories() {
 	require('../stories-core');
-	require('../stories-compound');
+	//require('../stories-compound');
 }
 
 const withFormLayout = (story, options) => {
