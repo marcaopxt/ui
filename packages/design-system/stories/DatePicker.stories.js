@@ -2,97 +2,32 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import talendIcons from '@talend/icons/dist/react';
-import IconsProvider from '../src/IconsProvider';
 
-import { TimePicker } from '../src/DateTimePickers/pickers/TimePicker/TimePicker.component';
-import DateManager from '../src/DateTimePickers/Date/Manager';
-import DatePicker from '../src/DateTimePickers/Date/Picker';
-import InputDateTimePicker from '../src/DateTimePickers/InputDateTimePicker';
-import InputTimePicker from '../src/DateTimePickers/InputTimePicker';
-import InputDatePicker from '../src/DateTimePickers/InputDatePicker';
-
-const icons = {
-	'talend-info-circle': talendIcons['talend-info-circle'],
-};
-
-class TestPickerWrapper extends React.Component {
-	static propTypes = {
-		...InputDatePicker.propTypes,
-	};
-
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			inputEvalValue: '',
-			value: this.props.value,
-		};
-		this.onSubmitEval = this.onSubmitEval.bind(this);
-		this.onChangeEvalInput = this.onChangeEvalInput.bind(this);
-	}
-
-	onSubmitEval() {
-		this.setState(prevState => ({
-			// eslint-disable-next-line no-eval
-			value: eval(prevState.inputEvalValue),
-		}));
-	}
-
-	onChangeEvalInput(event) {
-		this.setState({
-			inputEvalValue: event.target.value,
-		});
-	}
-	render() {
-		return (
-			<form
-				onSubmit={event => {
-					event.preventDefault();
-					action('submit');
-				}}
-				style={{ width: 320 }}
-			>
-				<div>
-					<label htmlFor="TestWrapper_storybook_eval-input">
-						Text to eval for updating 'value' prop
-					</label>
-					<br />
-					<input
-						id="TestWrapper_storybook_eval-input"
-						type="text"
-						onChange={this.onChangeEvalInput}
-						value={this.state.inputEvalValue}
-					/>
-					<button onClick={this.onSubmitEval} type="button">
-						Update
-					</button>
-				</div>
-				<br />
-				<InputDatePicker
-					{...this.props}
-					value={this.state.value}
-					onChange={action('onChange')}
-					onBlur={action('onBlur')}
-					name="Datetime"
-				/>
-			</form>
-		);
-	}
-}
+import IconsProvider from '@talend/react-components/lib/IconsProvider';
+// import { TimePicker } from '@talend/react-components/lib/DateTimePickers/pickers/TimePicker/TimePicker.component';
+import DateManager from '@talend/react-components/lib/DateTimePickers/Date/Manager';
+import DatePicker from '@talend/react-components/lib/DateTimePickers/Date/Picker';
+import InputDateTimePicker from '@talend/react-components/lib/DateTimePickers/InputDateTimePicker';
+// import InputTimePicker from '@talend/react-components/lib/DateTimePickers/InputTimePicker';
+import InputDatePicker from '@talend/react-components/lib/DateTimePickers/InputDatePicker';
 
 storiesOf('DatePicker', module)
-	.add('Date picker', () => (
+	.addParameters({ component: InputDatePicker })
+	.addDecorator(storyFn => (
 		<div>
 			<IconsProvider />
-			<h1>DatePicker</h1>
-			<p>
-				Default date picker
-				<br />
-				It comes with classical keyboard gesture.
-			</p>
-			<TestPickerWrapper id="my-date-picker" onChange={action('onChange')} name="Datetime" />
+			<form style={{ display: 'flex', justifyContent: 'center' }}>{storyFn()}</form>
 		</div>
 	))
+	.add('Date picker', () => (
+		<InputDatePicker
+			id="my-date-picker"
+			onChange={action('onChange')}
+			onBlur={action('onBlur')}
+			name="datetime"
+		/>
+	))
+	/*
 	.add('Date picker - UTC', () => (
 		<div>
 			<IconsProvider />
@@ -172,39 +107,14 @@ storiesOf('DatePicker', module)
 				/>
 			</form>
 		</div>
-	))
-	.add('Date picker - no input', () => {
-		const blockStyle = { border: '1px solid black', marginRight: '1rem' };
-		return (
-			<div>
-				<h1>DatePicker without input</h1>
-				<IconsProvider />
-				<ul>
-					<li>The minimum width is 290px, and minimum height is 352px. </li>
-					<li>The width and height can be defined by the parent. </li>
-					<li>
-						If no width or height are set explicitly, it uses minimum width and height by default,
-						like the first one.
-					</li>
-					<li>
-						The outer border style (black) is here just as visual shape indication, it's not part of
-						the component rendered
-					</li>
-				</ul>
-
-				<div style={{ display: 'flex', alignItems: 'flex-start' }}>
-					<div>
-						<h2>Date</h2>
-						<div style={blockStyle}>
-							<DateManager id="simple" onChange={action('onChange')}>
-								<DatePicker />
-							</DateManager>
-						</div>
-					</div>
-				</div>
-			</div>
-		);
-	})
+	))*/
+	.add('Date picker - no input', () => (
+		<div style={{ border: '1px solid black', marginRight: '1rem' }}>
+			<DateManager id="simple" onChange={action('onChange')}>
+				<DatePicker />
+			</DateManager>
+		</div>
+	)) /*
 	.add('Date picker - parent with fixed height', () => {
 		const width = 150;
 		return (
@@ -319,23 +229,16 @@ storiesOf('DatePicker', module)
 				</div>
 			</div>
 		</div>
-	))
+	))*/
 	.add('DateTime picker', () => (
-		<div>
-			<IconsProvider />
-			<h1>DateTimePicker</h1>
-			<p>datetime picker</p>
-			<form style={{ width: 320 }}>
-				<InputDateTimePicker
-					id="my-date-picker"
-					name="Datetime"
-					onBlur={action('onBlur')}
-					onChange={action('onChange')}
-					value={new Date(2018, 4, 13, 12, 30, 44)}
-				/>
-			</form>
-		</div>
-	))
+		<InputDateTimePicker
+			id="my-date-picker"
+			name="Datetime"
+			onBlur={action('onBlur')}
+			onChange={action('onChange')}
+			value={new Date(2018, 4, 13, 12, 30, 44)}
+		/>
+	)); /*
 	.add('DateTime picker - UTC', () => (
 		<div>
 			<IconsProvider />
@@ -424,4 +327,4 @@ storiesOf('DatePicker', module)
 				</div>
 			</div>
 		);
-	});
+	});*/
