@@ -1,0 +1,125 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import InputDatePicker from '@talend/react-components/lib/DateTimePickers/InputDatePicker';
+import Layout from '../../src/Layout';
+import dpTimeMargins from './images/DP-time-margins.png';
+import dpTimeDefault from './images/DP-time-default.png';
+import dpTimeSelected from './images/DP-time-selected.png';
+import dpTimeHover from './images/DP-time-hover.png';
+
+<Meta title="Guideline|Date Picker/Time" component={InputDatePicker} />
+
+# Time picker
+
+Time pickers are used as inputs to select either a single time.
+
+<Layout.Row>
+	<Layout.Col centered="horizontal">
+		<Story id="components-date-picker-time--picker" />
+	</Layout.Col>
+	<Layout.Col>
+		<Story id="components-date-picker-time--input" />
+	</Layout.Col>
+</Layout.Row>
+
+## Style
+
+<Layout.Row>
+	<Layout.Col centered="all">
+		<a href="#margins">Margins</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#default">Default</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#selected">Selected</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#hover-focus">Hover/Focus</a>
+	</Layout.Col>
+</Layout.Row>
+
+### Margins
+
+<img src={dpTimeMargins} alt="Margins" />
+
+| Part    | Attribute      | Variable  |
+| ------- | -------------- | --------- |
+| Popover | padding-top    | \$smaller |
+| Popover | padding-bottom | \$smaller |
+
+### Default
+
+<img src={dpTimeDefault} alt="Default time picker" />
+
+| Part            | Attribute      | Variable               |
+| --------------- | -------------- | ---------------------- |
+| Input           | default format | HH:mm / HH:mm:ss (24h) |
+| Popover         | width          | 7rem                   |
+| Popover         | height         | 17rem                  |
+| Popover element | color          | \$dove-gray            |
+| Popover element | font-size      | 1.4rem                 |
+| Popover element | font-weight    | regular                |
+| Popover element | text-align     | left                   |
+
+### Selected
+
+<img src={dpTimeSelected} alt="Selected state in date picker" />
+
+| Attribute        | Variable   |
+| ---------------- | ---------- |
+| background-color | \$lochmara |
+| color            | \$white    |
+| font-weight      | semi-bold  |
+
+### Hover/Focus
+
+<img src={dpTimeHover} alt="Hover/Focus state in time picker" />
+
+| Attribute        | Variable    |
+| ---------------- | ----------- |
+| background-color | \$wild-sand |
+
+## Interactions
+
+### Focus
+
+TODO: screen, interaction graph, or video
+
+Focus on the field
+
+- opens the picker popover
+- select all the current text, you can write a new date with keyboard
+
+### Input Change
+
+TODO: screen, interaction graph, or video
+
+When you start writing a time in the picker element will automatically select the time in the dropdown.
+
+### Selection
+
+TODO: screen, interaction graph, or video
+
+The popover is closed when a time is selected. The input reflects the selected time.
+
+### Cancel
+
+TODO: screen, interaction graph, or video
+
+When a part of the page outside of the calendar view is focused, then the popover closes.
+
+## Responsiveness
+
+TODO: popover behavior
+
+## Accessibility
+
+### Keyboard navigation
+
+TODO
+
+## Changelog
+
+| Date       | Author     | Description   |
+| ---------- | ---------- | ------------- |
+| 2019-11-06 | jsomsanith | init the page |

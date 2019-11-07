@@ -1,0 +1,228 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import InputDatePicker from '@talend/react-components/lib/DateTimePickers/InputDatePicker';
+import Layout from '../../src/Layout';
+import dpDateMargins from './images/DP-date-margins.jpeg';
+import dpDateDefault from './images/DP-date-default.png';
+import dpDateSelected from './images/DP-date-selected.png';
+import dpMonthSelected from './images/DP-month-selected.png';
+import dpDateHover from './images/DP-date-hover.png';
+import dpMonthHover from './images/DP-month-hover.png';
+import dpDateFocus from './images/DP-date-focus.png';
+import dpMonthFocus from './images/DP-month-focus.png';
+import dpDateActive from './images/DP-date-active.png';
+import dpMonthActive from './images/DP-month-active.png';
+import dpInteractionFocus from './images/DP-interaction-focus.png';
+
+<Meta title="Guideline|Date Picker/Date" component={InputDatePicker} />
+
+# Date picker
+
+Date pickers are used as inputs to select either a single date from calendar.
+
+<Layout.Row>
+	<Layout.Col centered="horizontal">
+		<Story id="components-date-picker-date--picker" />
+	</Layout.Col>
+	<Layout.Col>
+		<Story id="components-date-picker-date--input" />
+	</Layout.Col>
+</Layout.Row>
+
+## Style
+
+<Layout.Row>
+	<Layout.Col centered="all">
+		<a href="#margins">Margins</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#default">Default</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#selected">Selected</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#hover">Hover</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#focus">Focus</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#active">Active</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#disabled">Disabled</a>
+	</Layout.Col>
+</Layout.Row>
+
+### Margins
+
+<img src={dpDateMargins} alt="Margins" />
+
+### Default
+
+<Layout.Row>
+	<Layout.Col centered="horizontal">
+		<img src={dpDateDefault} alt="Default date picker" />
+	</Layout.Col>
+	<Layout.Col centered="horizontal">
+		<img src={dpMonthSelected} alt="Default month picker" />
+	</Layout.Col>
+</Layout.Row>
+
+| Part                 | Attribute        | Variable               |
+| -------------------- | ---------------- | ---------------------- |
+| Input                | default format   | yyyy-dd-mm             |
+| Header: navigation   | type             | Tertiary               |
+| Week index           | color            | \$dove-gray            |
+| Week index           | font-size        | 1.4rem                 |
+| Week index           | font-weight      | regular                |
+| Week index           | text-transform   | uppercase              |
+| Day                  | color            | \$dove-gray            |
+| Day                  | font-size        | 1.2rem                 |
+| Day                  | font-weight      | regular                |
+| Day: today           | background-color | tint (\$lochmara, 90%) |
+| Day: today           | border           | solid 1px \$lochmara   |
+| Day: today           | color            | \$lochmara             |
+| Month                | color            | \$dove-gray            |
+| Month                | font-size        | 1.2rem                 |
+| Month                | font-weight      | regular                |
+| Footer: today button | type             | Tertiary               |
+| Separators           | border           | 1px solid \$gallery    |
+
+### Selected
+
+<Layout.Row>
+	<Layout.Col centered="horizontal">
+		<img src={dpDateSelected} alt="Selected state in date picker" />
+	</Layout.Col>
+	<Layout.Col centered="horizontal">
+		<img src={dpMonthSelected} alt="Selected state in month picker" />
+	</Layout.Col>
+</Layout.Row>
+
+| Attribute        | Variable   |
+| ---------------- | ---------- |
+| background-color | \$lochmara |
+| color            | \$white    |
+| font-weight      | semi-bold  |
+
+### Hover
+
+<Layout.Row>
+	<Layout.Col centered="horizontal">
+		<img src={dpDateHover} alt="Hover state in date picker" />
+	</Layout.Col>
+	<Layout.Col centered="horizontal">
+		<img src={dpMonthHover} alt="Hover state in month picker" />
+	</Layout.Col>
+</Layout.Row>
+
+| Attribute        | Variable   |
+| ---------------- | ---------- |
+| background-color | \$concrete |
+
+### Focus
+
+<Layout.Row>
+	<Layout.Col centered="horizontal">
+		<img src={dpDateFocus} alt="Focus state in date picker" />
+	</Layout.Col>
+	<Layout.Col centered="horizontal">
+		<img src={dpMonthFocus} alt="Focus state in month picker" />
+	</Layout.Col>
+</Layout.Row>
+
+| Attribute | Variable                          |
+| --------- | --------------------------------- |
+| outline   | default style, only with keyboard |
+
+### Active
+
+<Layout.Row>
+	<Layout.Col centered="horizontal">
+		<img src={dpDateActive} alt="Active state in date picker" />
+	</Layout.Col>
+	<Layout.Col centered="horizontal">
+		<img src={dpMonthActive} alt="Active state in month picker" />
+	</Layout.Col>
+</Layout.Row>
+
+| Part          | Attribute        | Variable                |
+| ------------- | ---------------- | ----------------------- |
+| Header/Footer |                  | Tertiary default style  |
+| Day/Month     | background-color | Shade (\$concrete, 10%) |
+
+### Disabled
+
+The Calendar might include disabled dates that cannot be selected. For example, we'll probably have a limit for the date selection in the past or in the future, that's why year, month or day need to be disabled.
+
+TODO: Screen + style spec
+
+## Interactions
+
+### Focus
+
+<img src={dpInteractionFocus} alt="Focus interaction illustration" />
+
+Focus on the field
+
+- opens the calendar view
+- select all the current text, you can write a new date with keyboard
+
+### Input Change
+
+TODO: screen, interaction graph, or video
+
+When you start writing a day in the field this will automatically select the date in the dropdown
+
+### Selection
+
+TODO: screen, interaction graph, or video
+
+The calendar view is closed when a date is selected. The input reflects the selected date
+
+### Cancel
+
+TODO: screen, interaction graph, or video
+
+When a part of the page outside of the calendar view is focused, then the popover closes
+
+## Responsiveness
+
+TODO: popover behavior
+
+## Accessibility
+
+### Keyboard navigation
+
+- When the calendar is opened the input field is focused on, press `DOWN` to focus on the current date.
+- Press the `LEFT` and `RIGHT` arrow keys to navigate to the previous and next day
+- Press the `HOME` and `END` keys to jump to the beginning and the last of the month
+- Press the `UP` and `DOWN` arrow keys to navigate between weeks on the same week day.
+- Press the `PAGEDOWN` and `PAGEUP` keys to navigate backwards or forwards by month.
+- Press `ALT`+`PAGEDOWN` and `ALT`+`PAGEUP` to navigate backwards or forwards by year.
+- Press the `ENTER` key to activate the selected date.
+- Press `ESCAPE` to close the calendar without making a selection.
+
+### Focus order
+
+Week view :
+
+1. days
+2. today button
+3. left arrow
+4. right arrow
+5. month year button
+
+Month view :
+
+1. month
+2. today button
+3. right arrow
+4. year button
+
+## Changelog
+
+| Date       | Author     | Description   |
+| ---------- | ---------- | ------------- |
+| 2019-11-06 | jsomsanith | init the page |
