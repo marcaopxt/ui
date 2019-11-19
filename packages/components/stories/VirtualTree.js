@@ -18,7 +18,7 @@ storiesOf('VirtualTree', module)
 			<div style={style}>
 				<IconsProvider />
 				<form id="x" style={{ width: '500px', height: '500px' }}>
-					<VirtualTree nodes={Nodes} />
+					<VirtualTree nodes={Nodes} selectAllButton />
 				</form>
 			</div>
 		</div>

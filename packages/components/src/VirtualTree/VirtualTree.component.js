@@ -12,6 +12,7 @@ import { Nodes } from '../TreeView/data';
 
 import ThreeState from '../TreeView/renderers/ThreeState';
 import Expandable from './Expandable';
+import { ActionButton } from '../Actions/ActionButton/ActionButton.component';
 //const { Expandable } = Renderers;
 
 const SELECT = 3;
@@ -48,6 +49,7 @@ const Selection = props => {
 							},
 						},
 						type: SELECT,
+						index,
 					})
 				}
 			>
@@ -55,33 +57,6 @@ const Selection = props => {
 			</ThreeState>
 		</span>
 	);
-	/*
-	const className = classNames({
-		'mi mi-check-box': selected,
-		'mi mi-check-box-outline-blank': !selected,
-	});
-
-	return (
-		<span>
-			<i
-				className={className}
-				onClick={() =>
-					onChange({
-						node: {
-							...node,
-							state: {
-								...(node.state || {}),
-								selected: !selected,
-							},
-						},
-						type: SELECT,
-					})
-				}
-			/>
-			{children}
-		</span>
-	);
-	*/
 };
 
 class VirtualTree extends React.Component {
@@ -89,22 +64,21 @@ class VirtualTree extends React.Component {
 		super(props);
 		this.state = {
 			nodes: props.fast ? TreeState.createFromTree(props.nodes) : props.nodes,
+			all: '',
 		};
+		this.onClickSelectAll = this.onClickSelectAll.bind(this);
+		this.onClickUnselectAll = this.onClickUnselectAll.bind(this);
 	}
 
-	handleChange = nodes => {
-		this.setState({ nodes });
-	};
+	onClickSelectAll() {
+		const nodes = this.selectNodes(this.state.nodes, true);
+		this.setState({ nodes, all: 'selected' });
+	}
 
-	selectNodes = (nodes, selected) =>
-		nodes.map(n => ({
-			...n,
-			children: n.children ? this.selectNodes(n.children, selected) : [],
-			state: {
-				...n.state,
-				selected,
-			},
-		}));
+	onClickUnselectAll() {
+		const nodes = this.selectNodes(this.state.nodes, false);
+		this.setState({ nodes, all: 'unselected' });
+	}
 
 	nodeSelectionHandler = (nodes, updatedNode) =>
 		nodes.map(node => {
@@ -124,10 +98,68 @@ class VirtualTree extends React.Component {
 			return node;
 		});
 
+	selectNodes = (nodes, selected) =>
+		nodes.map(n => ({
+			...n,
+			children: n.children ? this.selectNodes(n.children, selected) : [],
+			state: {
+				...n.state,
+				selected,
+			},
+		}));
+
+	handleChange = nodes => {
+		this.setState({ nodes });
+	};
+
 	render() {
 		if (this.props.fast) {
 			return (
-				<UnstableFastTree
+				<React.Fragment>
+					{this.props.selectAllButton ? (
+						<ActionButton
+							label={this.state.all !== 'selected' ? 'Select all' : 'Unselect all'}
+							onClick={
+								this.state.all !== 'selected' ? this.onClickSelectAll : this.onClickUnselectAll
+							}
+						/>
+					) : null}
+					<UnstableFastTree
+						nodes={this.state.nodes}
+						onChange={this.handleChange}
+						extensions={{
+							updateTypeHandlers: {
+								[SELECT]: this.nodeSelectionHandler,
+							},
+						}}
+					>
+						{({ style, node, ...rest }) => {
+							// console.log('rest', rest);
+							return (
+								<div style={style}>
+									<Expandable node={node} {...rest}>
+										<Selection node={node} {...rest}>
+											{this.props.nodeLabelRenderer() || node.name}
+										</Selection>
+									</Expandable>
+								</div>
+							);
+						}}
+					</UnstableFastTree>
+				</React.Fragment>
+			);
+		}
+		return (
+			<React.Fragment>
+				{this.props.selectAllButton ? (
+					<ActionButton
+						label={this.state.all !== 'selected' ? 'Select all' : 'Unselect all'}
+						onClick={
+							this.state.all !== 'selected' ? this.onClickSelectAll : this.onClickUnselectAll
+						}
+					/>
+				) : null}
+				<Tree
 					nodes={this.state.nodes}
 					onChange={this.handleChange}
 					extensions={{
@@ -136,47 +168,24 @@ class VirtualTree extends React.Component {
 						},
 					}}
 				>
-					{({ style, node, ...rest }) => {
-						// console.log('rest', rest);
-						return (
-							<div style={style}>
-								<Expandable node={node} {...rest}>
-									<Selection node={node} {...rest}>
-										{this.props.nodeLabelRenderer() || node.name}
-									</Selection>
-								</Expandable>
-							</div>
-						);
-					}}
-				</UnstableFastTree>
-			);
-		}
-		return (
-			<Tree
-				nodes={this.state.nodes}
-				onChange={this.handleChange}
-				extensions={{
-					updateTypeHandlers: {
-						[SELECT]: this.nodeSelectionHandler,
-					},
-				}}
-			>
-				{({ style, node, ...rest }) => (
-					<div style={style}>
-						<Expandable node={node} {...rest}>
-							<Selection node={node} {...rest}>
-								{node.name}
-							</Selection>
-						</Expandable>
-					</div>
-				)}
-			</Tree>
+					{({ style, node, ...rest }) => (
+						<div style={style}>
+							<Expandable node={node} {...rest}>
+								<Selection node={node} {...rest}>
+									{node.name}
+								</Selection>
+							</Expandable>
+						</div>
+					)}
+				</Tree>
+			</React.Fragment>
 		);
 	}
 }
 
 VirtualTree.displayName = 'VirtualTree';
 VirtualTree.propTypes = {
+	selectAllButton: PropTypes.bool,
 	//	name: PropTypes.string,
 	nodes: PropTypes.arrayOf(PropTypes.object),
 	fast: PropTypes.bool,
