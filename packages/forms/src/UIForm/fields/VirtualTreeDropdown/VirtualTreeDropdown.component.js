@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import VirtualTree from '@talend/react-components/lib/VirtualTree';
+import keycode from 'keycode';
 import FieldTemplate from '@talend/react-forms/lib/UIForm/fields/FieldTemplate';
 import {
 	generateDescriptionId,
@@ -8,23 +9,59 @@ import {
 } from '@talend/react-forms/lib/UIForm/Message/generateId';
 import callTrigger from '@talend/react-forms/lib/UIForm/trigger';
 
-export default class VirtualTreeField extends React.Component {
+function isIn(element, container) {
+	if (element.parentElement === null) {
+		return false;
+	}
+	if (element.parentElement !== container) {
+		return isIn(element.parentElement, container);
+	}
+	return true;
+}
+
+export default class VirtualTreeDropdown extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { selected: props.value };
+		// fields
+		// this.onClearAll = this.onClearAll.bind(this);
+		// dropdown
+		this.onInputFocus = this.onInputFocus.bind(this);
+		this.onInputKeyDown = this.onInputKeyDown.bind(this);
+		this.closeOnOutsideClick = this.closeOnOutsideClick.bind(this);
+		// trigger
 		this.onTrigger = this.onTrigger.bind(this);
 		this.onTriggerResult = this.onTriggerResult.bind(this);
 		this.onChange = this.onChange.bind(this);
 	}
 
 	componentDidMount() {
+		document.addEventListener('click', this.closeOnOutsideClick);
 		this.onTrigger({ type: 'didMount' });
 	}
-
+	/*
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.value !== this.props.value) {
 			// reset selected
 			this.setState({ selected: nextProps.value });
+		}
+	}
+*/
+	componentWillUnmount() {
+		document.removeEventListener('click', this.closeOnOutsideClick);
+	}
+
+	onInputKeyDown(event) {
+		if (event.which === keycode.codes.esc) {
+			event.preventDefault();
+			this.setState({ showDropdown: false });
+		}
+	}
+
+	onInputFocus(event) {
+		this.setState({ showDropdown: true });
+		if (this.props.onFocus) {
+			this.props.onFocus(event);
 		}
 	}
 
@@ -37,6 +74,7 @@ export default class VirtualTreeField extends React.Component {
 			onResponse: data => this.setState(data),
 		});
 	}
+
 	onTriggerResult(event, trigger) {
 		return this.props.onTrigger(event, {
 			trigger,
@@ -67,6 +105,11 @@ export default class VirtualTreeField extends React.Component {
 			.map(entry => entry[1])
 			.join(', ');
 	}
+	closeOnOutsideClick(event) {
+		if (this.containerRef !== null && !isIn(event.target, this.containerRef)) {
+			this.setState({ showDropdown: false, searchTerm: '' });
+		}
+	}
 
 	render() {
 		const { id, isValid, errorMessage, schema } = this.props;
@@ -86,33 +129,43 @@ export default class VirtualTreeField extends React.Component {
 				label={schema.title}
 				required={schema.required}
 			>
-				<VirtualTree
-					id={id}
-					autoFocus={schema.autoFocus}
-					disabled={schema.disabled}
-					required={schema.required}
-					placeholder={schema.placeholder}
-					readOnly={schema.readOnly}
-					onBlur={this.onTrigger}
-					onChange={this.onChange}
-					onFocus={this.onTrigger}
-					nodes={this.props.value}
-					isLoading={this.state.isLoading}
-					selectAllButton
-				/>
+				{this.state.showDropdown && (
+					<div className={theme.dropdown} style={{ height: props.height }}>
+					{props.isLoading ? (
+						<div className={theme.loading}>
+							<CircularProgress />
+						</div>
+					) :
+					(<VirtualTree
+						id={id}
+						autoFocus={schema.autoFocus}
+						disabled={schema.disabled}
+						required={schema.required}
+						placeholder={schema.placeholder}
+						readOnly={schema.readOnly}
+						onBlur={this.onTrigger}
+						onChange={this.onChange}
+						onFocus={this.onTrigger}
+						nodes={this.props.value}
+						isLoading={this.state.isLoading}
+						selectAllButton
+					/>)
+					}
+				)}
 			</FieldTemplate>
 		);
 	}
 }
 
 if (process.env.NODE_ENV !== 'production') {
-	VirtualTreeField.propTypes = {
+	VirtualTreeDropdown.propTypes = {
 		id: PropTypes.string,
 		isValid: PropTypes.bool,
 		errorMessage: PropTypes.string,
 		errors: PropTypes.object,
 		onChange: PropTypes.func.isRequired,
 		onFinish: PropTypes.func.isRequired,
+		onFocus: PropTypes.func,
 		onTrigger: PropTypes.func.isRequired,
 		properties: PropTypes.object,
 		//		resolveName: PropTypes.func,
@@ -141,7 +194,7 @@ if (process.env.NODE_ENV !== 'production') {
 	};
 }
 
-VirtualTreeField.defaultProps = {
+VirtualTreeDropdown.defaultProps = {
 	isValid: true,
 	schema: {},
 	value: [],
