@@ -1,0 +1,157 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import Layout from '../../src/Layout';
+
+ import Component from '@talend/react-components/lib/ComponentFile'; // TODO replace Component and ComponentFile
+ <Meta title="Guideline|Component name/case" component={Component} /> // TODO replace Component name, case, Component
+
+# Main title // TODO add title
+
+Description // TODO add description
+
+<Layout.Row>
+	<Layout.Col centered="horizontal">
+		<Story id="story-id" /> // TODO replace story-id
+	</Layout.Col>
+	<Layout.Col>
+		<Story id="story-id" />  // TODO replace story-id
+	</Layout.Col>
+</Layout.Row>
+
+## Style
+
+<Layout.Row>
+	<Layout.Col centered="all">
+		<a href="#margins">Margins</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#default">Default</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#selected">Selected</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#hover">Hover</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#focus">Focus</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#active">Active</a>
+	</Layout.Col>
+	<Layout.Col centered="all">
+		<a href="#disabled">Disabled</a>
+	</Layout.Col>
+</Layout.Row>
+
+### Margins <a id="margins" />
+
+// TODO add image <img src={} alt="" />
+
+// TODO add guideline for Style > Margins
+
+### Default
+
+// TODO add image <img src={} alt="" />
+
+// TODO add Style > default state
+
+// TODO fill tokens
+
+| Attribute | Variable |
+| --------- | -------- |
+|           |          |
+
+### Selected
+
+// TODO add image <img src={} alt="" />
+
+// TODO add Style > selected state
+
+// TODO fill tokens
+
+| Attribute | Variable |
+| --------- | -------- |
+|           |          |
+
+### Hover
+
+// TODO add image <img src={} alt="" />
+
+// TODO add Style > hover state
+
+// TODO fill tokens
+
+| Attribute | Variable |
+| --------- | -------- |
+|           |          |
+
+### Focus
+
+// TODO add image <img src={} alt="" />
+
+// TODO add Style > focus state
+
+// TODO fill tokens
+
+| Attribute | Variable |
+| --------- | -------- |
+|           |          |
+
+### Active
+
+// TODO add image <img src={} alt="" />
+
+// TODO add Style > active state
+
+// TODO fill tokens
+
+| Attribute | Variable |
+| --------- | -------- |
+|           |          |
+
+### Disabled
+
+// TODO add image <img src={} alt="" />
+
+// TODO add Style > disabled state
+
+// TODO fill tokens
+
+| Attribute | Variable |
+| --------- | -------- |
+|           |          |
+
+## Interactions
+
+// TODO add subsection by interaction + description
+### Sub section title
+
+// TODO add image <img src={} alt="" />
+
+// TODO add description
+
+
+## Responsiveness
+
+// TODO add subsection by layout (drawer, modal, ...)
+### Sub section title
+
+// TODO add image <img src={} alt="" />
+
+// TODO add description/tokens
+
+## Accessibility
+
+// TODO add subsections (keyboard, focus order, ...)
+### Sub section title
+
+// TODO add image <img src={} alt="" />
+
+// TODO add description
+
+## Changelog
+
+// TODO fill changelog
+| Date       | Author     | Description   |
+| ---------- | ---------- | ------------- |
+|            |            | Init page     |
