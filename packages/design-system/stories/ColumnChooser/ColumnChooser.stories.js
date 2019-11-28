@@ -37,12 +37,14 @@ storiesOf('Components|Column Chooser', module)
 		</div>
 	))
 	.add('Chooser', () => (
-		<ColumnChooser
-			columnsFromList={columns}
-			nbLockedLeftItems={2}
-			id="default-column-chooser"
-			onSubmit={action('submit')}
-		/>
+		<div style={{ border: '1px solid black' }}>
+			<ColumnChooser
+				columnsFromList={columns}
+				nbLockedLeftItems={2}
+				id="default-column-chooser"
+				onSubmit={action('submit')}
+			/>
+		</div>
 	))
 	.add('Button and popover', () => (
 		<ColumnChooserButton

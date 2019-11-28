@@ -1,8 +1,7 @@
 import { Meta, Story } from '@storybook/addon-docs/blocks';
 import Layout from '../../src/Layout';
 
- import Component from '@talend/react-components/lib/ComponentFile'; // TODO replace Component and ComponentFile
- <Meta title="Guideline|Component name/case" component={Component} /> // TODO replace Component name, case, Component
+<Meta title="Guideline|todo" /> // TODO add title
 
 # Main title // TODO add title
 
@@ -45,13 +44,13 @@ Description // TODO add description
 
 ### Margins <a id="margins" />
 
-// TODO add image <img src={} alt="" />
+// TODO add image <img src="" alt="" />
 
 // TODO add guideline for Style > Margins
 
-### Default
+### Default <a id="default" />
 
-// TODO add image <img src={} alt="" />
+// TODO add image <img src="" alt="" />
 
 // TODO add Style > default state
 
@@ -61,9 +60,9 @@ Description // TODO add description
 | --------- | -------- |
 |           |          |
 
-### Selected
+### Selected <a id="selected" />
 
-// TODO add image <img src={} alt="" />
+// TODO add image <img src="" alt="" />
 
 // TODO add Style > selected state
 
@@ -73,9 +72,9 @@ Description // TODO add description
 | --------- | -------- |
 |           |          |
 
-### Hover
+### Hover <a id="hover" />
 
-// TODO add image <img src={} alt="" />
+// TODO add image <img src="" alt="" />
 
 // TODO add Style > hover state
 
@@ -85,9 +84,9 @@ Description // TODO add description
 | --------- | -------- |
 |           |          |
 
-### Focus
+### Focus <a id="focus" />
 
-// TODO add image <img src={} alt="" />
+// TODO add image <img src="" alt="" />
 
 // TODO add Style > focus state
 
@@ -97,9 +96,9 @@ Description // TODO add description
 | --------- | -------- |
 |           |          |
 
-### Active
+### Active <a id="active" />
 
-// TODO add image <img src={} alt="" />
+// TODO add image <img src="" alt="" />
 
 // TODO add Style > active state
 
@@ -109,9 +108,9 @@ Description // TODO add description
 | --------- | -------- |
 |           |          |
 
-### Disabled
+### Disabled <a id="disabled" />
 
-// TODO add image <img src={} alt="" />
+// TODO add image <img src="" alt="" />
 
 // TODO add Style > disabled state
 
@@ -126,7 +125,7 @@ Description // TODO add description
 // TODO add subsection by interaction + description
 ### Sub section title
 
-// TODO add image <img src={} alt="" />
+// TODO add image <img src="" alt="" />
 
 // TODO add description
 
@@ -136,7 +135,7 @@ Description // TODO add description
 // TODO add subsection by layout (drawer, modal, ...)
 ### Sub section title
 
-// TODO add image <img src={} alt="" />
+// TODO add image <img src="" alt="" />
 
 // TODO add description/tokens
 
@@ -145,7 +144,7 @@ Description // TODO add description
 // TODO add subsections (keyboard, focus order, ...)
 ### Sub section title
 
-// TODO add image <img src={} alt="" />
+// TODO add image <img src="" alt="" />
 
 // TODO add description
 
