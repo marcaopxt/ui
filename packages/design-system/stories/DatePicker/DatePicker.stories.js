@@ -1,7 +1,7 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import talendIcons from '@talend/icons/dist/react';
 
 import IconsProvider from '@talend/react-components/lib/IconsProvider';
 import { TimePicker } from '@talend/react-components/lib/DateTimePickers/pickers/TimePicker/TimePicker.component';
