@@ -300,7 +300,7 @@ const isFixedColumnWidth = (resizable, width, minWidth) => !resizable || width <
 
 export const createColumnWidthProps = columnsWidthsParams => {
 	if (!columnsWidthsParams) {
-		return undefined;
+		return { width: -1 };
 	}
 	const { resizable, width, minWidth } = columnsWidthsParams;
 	if (isFixedColumnWidth(resizable, width, minWidth)) {
