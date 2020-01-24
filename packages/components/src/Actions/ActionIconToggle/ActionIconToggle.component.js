@@ -9,28 +9,38 @@ import getPropsFrom from '../../utils/getPropsFrom';
 
 import theme from './ActionIconToggle.scss';
 
-function ActionIconToggle(props) {
-	const { active, className, icon, iconTransform, id, label, tooltipPlacement, ...rest } = props;
-
+function renderButton(active, className, icon, iconTransform, id, label, ...rest) {
 	const cn = classNames(className, 'tc-icon-toggle', theme['tc-icon-toggle'], {
 		[theme.active]: active,
 		active,
 	});
 
 	return (
-		<TooltipTrigger label={label} tooltipPlacement={tooltipPlacement}>
-			<Button
-				{...getPropsFrom(Button, rest)}
-				id={id}
-				className={cn}
-				aria-label={label}
-				aria-pressed={active}
-				bsStyle="link"
-			>
-				<Icon name={icon} transform={iconTransform} />
-			</Button>
-		</TooltipTrigger>
+		<Button
+			{...getPropsFrom(Button, rest)}
+			id={id}
+			className={cn}
+			aria-label={label}
+			aria-pressed={active}
+			bsStyle="link"
+		>
+			<Icon name={icon} transform={iconTransform} />
+		</Button>
 	);
+}
+
+function ActionIconToggle(props) {
+	const { label, tooltipPlacement, ...rest } = props;
+
+	if (label) {
+		return (
+			<TooltipTrigger label={label} tooltipPlacement={tooltipPlacement}>
+				{renderButton(rest)}
+			</TooltipTrigger>
+		);
+	}
+
+	return renderButton(rest);
 }
 
 ActionIconToggle.propTypes = {
