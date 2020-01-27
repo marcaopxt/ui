@@ -36,7 +36,9 @@ function ContextualManager(props) {
 		}
 	}
 	function onDateChange(event, payload) {
-		const newState = updatePartsOnDateChange(payload, state.time, getDateOptions());
+		const newState = updatePartsOnDateChange(payload,
+			state.time || props.defaultTimeValue,
+			getDateOptions());
 		const nextState = {
 			...state,
 			...newState,
@@ -74,6 +76,7 @@ ContextualManager.propTypes = {
 	value: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.number, PropTypes.string]),
 	useSeconds: PropTypes.bool,
 	useUTC: PropTypes.bool,
+	defaultTimeValue: PropTypes.object,
 };
 
 ContextualManager.defaultProps = {

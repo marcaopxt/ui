@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import talendIcons from '@talend/icons/dist/react';
@@ -338,6 +338,30 @@ storiesOf('DatePicker', module)
 			</form>
 		</div>
 	))
+	.add('DateTime default value', () => {
+		const StatefulDateTimePicker = () => {
+			const [getDate, setDate] = useState(null);
+
+			return (
+				<form style={{ width: 320 }}>
+					<InputDateTimePicker
+						id="my-date-picker"
+						name="Datetime"
+						onBlur={action('onBlur')}
+						onChange={(e, v) => setDate(new Date(v.datetime))}
+						value={getDate}
+						defaultTimeValue={{
+							hours: '03',
+							minutes: '04',
+							seconds: '00',
+						}}
+					/>
+				</form>
+			);
+		};
+
+		return <StatefulDateTimePicker />;
+	})
 	.add('DateTime picker - UTC', () => (
 		<div>
 			<IconsProvider />
